@@ -7,11 +7,9 @@ export default function HopLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<html lang="en">
-			<body className="flex h-screen">
-				<LeftSidebar />
-				<main className="flex-1 overflow-auto">{children}</main>
-			</body>
-		</html>
+		<div className= "flex h-screen">
+			<LeftSidebar />
+			<main className="flex-1 overflow-auto">{children}</main>
+		</div>
 	);
 }
