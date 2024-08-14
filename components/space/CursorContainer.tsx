@@ -117,6 +117,22 @@ const CursorContainer: React.FC<HomeProps> = ({
 			}
 		};
 
+		const handleMouseDown = () => {
+			setIsTracking((prev) => {
+				console.log("mouse down, previous tracking state: ", prev);
+				return false;
+			});
+		};
+
+		const handleMouseUp = () => {
+			console.log("Mouse up event detected."); 
+			setIsTracking((prev) => {
+				console.log("mouse up, previous tracking state: ", prev);
+				sendJsonMessage(mousePosition);
+				return true;
+			});
+		};
+
 		const container = containerRef.current;
 
 		if (container) {
@@ -132,7 +148,7 @@ const CursorContainer: React.FC<HomeProps> = ({
 				container.removeEventListener("mouseup", handleMouseUp);
 			}
 		};
-	}, [sendJsonMessage]);
+	}, [sendJsonMessage, isTracking]);
 
 	useEffect(() => {
 		if (lastJsonMessage) {
@@ -148,25 +164,10 @@ const CursorContainer: React.FC<HomeProps> = ({
 		}
 	}, [lastJsonMessage, username]);
 
-	const handleMouseDown = () => {
-		setIsTracking(false); // THIS DOES NOT TOGGLE
-		console.log("mouse down, tracking: ", isTracking); // TRUE THEN FALSE 
-	};
-
-	const handleMouseUp = () => {
-		// THIS IS NEVER USED/CALLED
-		setIsTracking(true);
-		console.log("mouse up, tracking: ", isTracking); // DOES NOT LOG
-		//sendJsonMessage(mousePosition);
-	};
-
 	return (
 		<div
 			ref={containerRef}
-			className="absolute inset-0 bg-transparent z-20 text-black"
-			onMouseDown={handleMouseDown}
-			onMouseUp={handleMouseUp}
-			style={{ pointerEvents: isTracking ? "auto" : "none" }}
+			className={`absolute inset-0 z-20 text-black ${isTracking ? "pointer-events-auto" : "pointer-events-none"}`}
 		>
 			<h1>Hello, {username}</h1>
 			<p>Current users:</p>

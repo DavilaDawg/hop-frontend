@@ -65,7 +65,7 @@ const SpacePage: React.FC = () => {
 							/>
 						)}
 						<iframe
-							className="absolute inset-0 w-full h-full z-10"
+							className="absolute inset-0 w-full h-full z-0"
 							title="vnc"
 							src="https://isaaaaaaaaaaaaaaaaa.fly.dev/"
 						/>
