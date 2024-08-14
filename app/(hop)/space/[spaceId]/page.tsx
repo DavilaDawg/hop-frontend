@@ -18,8 +18,8 @@ const SpacePage: React.FC = () => {
 	// BUG STARTS HERE MEMBERS- NO CURSOR
 
 	// Get User data /api/user
-	const realUsername = "DavilaDawg"; // for testing
-	//const realUsername= "";
+	//const realUsername = "DavilaDawg"; // for testing
+	const realUsername= "";
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
@@ -65,7 +65,7 @@ const SpacePage: React.FC = () => {
 							/>
 						)}
 						<iframe
-							className="absolute inset-0 w-full h-full z-0"
+							className="absolute inset-0 w-full h-full z-10"
 							title="vnc"
 							src="https://isaaaaaaaaaaaaaaaaa.fly.dev/"
 						/>
