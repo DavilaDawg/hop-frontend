@@ -33,7 +33,6 @@ export function Cursor({ point, color, username }: CursorProps) {
 			style={{
 				position: "absolute",
 				transform: `translate(${point[0]}px, ${point[1]}px)`,
-				pointerEvents: "none",
 			}}
 			className="flex flex-col items-center"
 		>

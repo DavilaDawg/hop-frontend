@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React from "react";
 import { useEffect, useRef, useState } from "react";
@@ -50,7 +50,7 @@ const renderCursors = (
 				) : (
 					<CustomCursor
 						key={uuid}
-						point={[x,y]}
+						point={[x, y]}
 						imageUrl={user.state?.cursor}
 						username={user.state?.username}
 					/>
@@ -121,11 +121,15 @@ const CursorContainer: React.FC<HomeProps> = ({
 
 		if (container) {
 			container.addEventListener("mousemove", handleMouseMove);
+			container.addEventListener("mousedown", handleMouseDown);
+			container.addEventListener("mouseup", handleMouseUp);
 		}
 
 		return () => {
 			if (container) {
 				container.removeEventListener("mousemove", handleMouseMove);
+				container.removeEventListener("mousedown", handleMouseDown);
+				container.removeEventListener("mouseup", handleMouseUp);
 			}
 		};
 	}, [sendJsonMessage]);
@@ -145,12 +149,15 @@ const CursorContainer: React.FC<HomeProps> = ({
 	}, [lastJsonMessage, username]);
 
 	const handleMouseDown = () => {
-		setIsTracking(false);
+		setIsTracking(false); // THIS DOES NOT TOGGLE
+		console.log("mouse down, tracking: ", isTracking); // TRUE THEN FALSE 
 	};
 
 	const handleMouseUp = () => {
+		// THIS IS NEVER USED/CALLED
 		setIsTracking(true);
-		sendJsonMessage(mousePosition);
+		console.log("mouse up, tracking: ", isTracking); // DOES NOT LOG
+		//sendJsonMessage(mousePosition);
 	};
 
 	return (
