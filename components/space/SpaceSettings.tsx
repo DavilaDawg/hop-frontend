@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react";
 import { FiSettings, FiShare2, FiLink } from "react-icons/fi";
 

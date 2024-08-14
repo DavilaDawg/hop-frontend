@@ -1,3 +1,5 @@
+"use client"
+
 import type React from "react";
 import SpaceSettings from "./SpaceSettings";
 import ChatContainer from "./ChatContainer";

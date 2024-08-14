@@ -1,6 +1,7 @@
+"use client"
+
 import { Logo } from "@/components/ui/Logo";
 import Link from "next/link";
-import { Button } from "@components/ui/Button";
 import { FaUserFriends } from "react-icons/fa";
 import OnlineFriendsContainer from "./OnlineFriendsContainer";
 

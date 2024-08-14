@@ -1,3 +1,5 @@
+"use client"
+
 import { Slider } from '@/components/ui/slider';
 import { IoMdVolumeHigh } from 'react-icons/io';
 

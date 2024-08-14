@@ -1,3 +1,5 @@
+"use client"
+
 import type React from "react";
 import Avatar from "@components/ui/UserAvatar";
 import { Slider } from "@/components/ui/slider";

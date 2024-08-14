@@ -1,3 +1,5 @@
+"use client"
+
 import ScrollBar from "@components/ui/SrollBar";
 import type React from "react";
 import { useState, useEffect, useMemo } from "react";
