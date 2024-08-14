@@ -1,11 +1,11 @@
 "use client";
 
-import React from "react";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import useWebSocket from "react-use-websocket";
 import throttle from "lodash.throttle";
 import { Cursor } from "./Cursor";
 import { CustomCursor } from "./CustomCursor";
+
 interface UserState {
 	username: string;
 	color: string;
@@ -13,13 +13,16 @@ interface UserState {
 	x: number;
 	y: number;
 }
+
 interface User {
 	username: string;
 	state: UserState;
 }
+
 interface Users {
 	[uuid: string]: User;
 }
+
 interface HomeProps {
 	username: string;
 	color: string;
@@ -34,7 +37,7 @@ const renderCursors = (
 ) => {
 	return Object.keys(users).map((uuid) => {
 		const user = users[uuid];
-		const color = user.state?.color || "";
+		const userColor = user.state?.color || "";
 		const x = user.state?.x ?? 0;
 		const y = user.state?.y ?? 0;
 
@@ -42,14 +45,12 @@ const renderCursors = (
 			<React.Fragment key={uuid}>
 				{user.state?.cursor === "/norm.png" || user.state?.cursor === "" ? (
 					<Cursor
-						key={uuid}
-						color={color}
+						color={userColor}
 						point={[x, y]}
 						username={user.state?.username}
 					/>
 				) : (
 					<CustomCursor
-						key={uuid}
 						point={[x, y]}
 						imageUrl={user.state?.cursor}
 						username={user.state?.username}
@@ -63,9 +64,9 @@ const renderCursors = (
 const renderUsersList = (users: Users) => {
 	return (
 		<ul>
-			{Object.keys(users).map((uuid) => {
-				return <li key={uuid}>{users[uuid].username}</li>;
-			})}
+			{Object.keys(users).map((uuid) => (
+				<li key={uuid}>{users[uuid].username}</li>
+			))}
 		</ul>
 	);
 };
@@ -76,21 +77,21 @@ const CursorContainer: React.FC<HomeProps> = ({
 	selectedCursor,
 }) => {
 	const [otherUsers, setOtherUsers] = useState<Users>({});
-	const [isTracking, setIsTracking] = useState(true);
-	const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+	const [isTracking, setIsTracking] = useState<boolean>(true);
+	const [mousePosition, setMousePosition] = useState<{ x: number; y: number }>({
+		x: 0,
+		y: 0,
+	});
 
-	//const WS_URL = "ws://localhost:8000";
 	const WS_URL = `ws://localhost:8000?username=${encodeURIComponent(username)}&selectedCursor=${encodeURIComponent(selectedCursor)}&color=${encodeURIComponent(color)}`;
 
-	const containerRef = useRef<HTMLDivElement>(null);
+	const containerRef = useRef<HTMLDivElement | null>(null);
 
 	const { sendJsonMessage, lastJsonMessage } = useWebSocket(WS_URL);
 
 	const THROTTLE = 10;
-
 	const sendJsonMessageThrottled = useRef(throttle(sendJsonMessage, THROTTLE));
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		sendJsonMessage({
 			x: 0,
@@ -99,56 +100,7 @@ const CursorContainer: React.FC<HomeProps> = ({
 			username: username,
 			color: color,
 		});
-
-		const handleMouseMove = (e: MouseEvent) => {
-			if (containerRef.current) {
-				const rect = containerRef.current.getBoundingClientRect();
-				const data = {
-					x: e.clientX - rect.left,
-					y: e.clientY - rect.top,
-					cursor: selectedCursor,
-					username: username,
-					color: color,
-				};
-				setMousePosition(data);
-				if (isTracking) {
-					sendJsonMessageThrottled.current(data);
-				}
-			}
-		};
-
-		const handleMouseDown = () => {
-			setIsTracking((prev) => {
-				console.log("mouse down, previous tracking state: ", prev);
-				return false;
-			});
-		};
-
-		const handleMouseUp = () => {
-			console.log("Mouse up event detected."); 
-			setIsTracking((prev) => {
-				console.log("mouse up, previous tracking state: ", prev);
-				sendJsonMessage(mousePosition);
-				return true;
-			});
-		};
-
-		const container = containerRef.current;
-
-		if (container) {
-			container.addEventListener("mousemove", handleMouseMove);
-			container.addEventListener("mousedown", handleMouseDown);
-			container.addEventListener("mouseup", handleMouseUp);
-		}
-
-		return () => {
-			if (container) {
-				container.removeEventListener("mousemove", handleMouseMove);
-				container.removeEventListener("mousedown", handleMouseDown);
-				container.removeEventListener("mouseup", handleMouseUp);
-			}
-		};
-	}, [sendJsonMessage, isTracking]);
+	}, [sendJsonMessage, selectedCursor, username, color]);
 
 	useEffect(() => {
 		if (lastJsonMessage) {
@@ -164,10 +116,39 @@ const CursorContainer: React.FC<HomeProps> = ({
 		}
 	}, [lastJsonMessage, username]);
 
+	const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+		if (containerRef.current && isTracking) {
+			const rect = containerRef.current.getBoundingClientRect();
+			const data = {
+				x: e.clientX - rect.left,
+				y: e.clientY - rect.top,
+				cursor: selectedCursor,
+				username: username,
+				color: color,
+			};
+			setMousePosition(data);
+			sendJsonMessageThrottled.current(data);
+		}
+	};
+
+	const handleMouseDown = () => {
+		console.log("Mouse down");
+		setIsTracking(false);
+	};
+
+	const handleMouseUp = () => {
+		console.log("Mouse up");
+		setIsTracking(true);
+		sendJsonMessage(mousePosition);
+	};
+
 	return (
 		<div
 			ref={containerRef}
 			className={`absolute inset-0 z-20 text-black ${isTracking ? "pointer-events-auto" : "pointer-events-none"}`}
+			onMouseMove={handleMouseMove}
+			onMouseDown={handleMouseDown}
+			onMouseUp={handleMouseUp}
 		>
 			<h1>Hello, {username}</h1>
 			<p>Current users:</p>
