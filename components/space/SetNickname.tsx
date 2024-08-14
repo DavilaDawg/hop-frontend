@@ -36,7 +36,7 @@ const SetNickname: React.FC<NicknameProps> = ({
 
 	useEffect(() => {
 		if (realUsername) {
-		  setWsUrl(`ws://localhost:8000?username=${encodeURIComponent(realUsername)}`);
+		  setWsUrl(`ws://10.10.22.20:8000?username=${encodeURIComponent(realUsername)}`);
 		}
 	  }, [realUsername]);
 

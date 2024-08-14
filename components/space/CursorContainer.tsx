@@ -83,7 +83,7 @@ const CursorContainer: React.FC<HomeProps> = ({
 		y: 0,
 	});
 
-	const WS_URL = `ws://localhost:8000?username=${encodeURIComponent(username)}&selectedCursor=${encodeURIComponent(selectedCursor)}&color=${encodeURIComponent(color)}`;
+	const WS_URL = `ws://10.10.22.20:8000?username=${encodeURIComponent(username)}&selectedCursor=${encodeURIComponent(selectedCursor)}&color=${encodeURIComponent(color)}`;
 
 	const containerRef = useRef<HTMLDivElement | null>(null);
 

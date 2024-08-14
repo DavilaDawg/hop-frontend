@@ -18,9 +18,8 @@ const ChatContainer: React.FC<RightSideBarProps> = ({ realUsername }) => {
 	const [messages, setMessages] = useState<ChatMessage[]>([]);
 	const [inputMessage, setInputMessage] = useState("");
 
-	//const WS_URL = `ws://localhost:8000?username=${encodeURIComponent(realUsername)}`;
 	const WS_URL = useMemo(
-		() => `ws://localhost:8000?username=${encodeURIComponent(realUsername)}`,
+		() => `ws://10.10.22.20:8000?username=${encodeURIComponent(realUsername)}`,
 		[realUsername],
 	);
 

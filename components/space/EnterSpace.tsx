@@ -40,7 +40,7 @@ const EnterSpace: React.FC<NicknameProps> = ({
 	useEffect(() => {
 		if (realUsername) {
 			setWsUrl(
-				`ws://localhost:8000?username=${encodeURIComponent(realUsername)}`,
+				`ws://10.10.22.20:8000?username=${encodeURIComponent(realUsername)}`,
 			);
 		}
 	}, [realUsername]);
