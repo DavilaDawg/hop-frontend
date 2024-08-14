@@ -15,9 +15,11 @@ const SpacePage: React.FC = () => {
 	const [selectedCursor, setSelectedCursor] = useState<string>("");
 	const [member, setMember] = useState<boolean>(true);
 
+	// BUG STARTS HERE MEMBERS
+
 	// Get User data /api/user
-	//const realUsername = "DavilaDawg"; // for testing
-	 const realUsername= "";
+	//const realUsername = "DavilaDawg"; // for testing  
+	const realUsername= "";
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
