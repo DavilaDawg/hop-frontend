@@ -65,7 +65,8 @@ const EnterSpace: React.FC<NicknameProps> = ({
 			/>
 
 			<button
-				type="button"
+				type="submit"
+				suppressHydrationWarning
 				onClick={handleClick}
 				className="bg-pink-400 hover:bg-pink-500 text-white p-4 rounded-xl text-2xl font-bold absolute z-10"
 				style={{ top: '106%', left: '50%', transform: 'translate(-50%, -50%)' }}

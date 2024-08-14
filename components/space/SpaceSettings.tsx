@@ -18,6 +18,7 @@ const SpaceSettings = () => {
 					<button
 						key={item.text}
 						type="button"
+						suppressHydrationWarning
 						className="flex items-center space-x-2 p-2 hover:bg-gray-300 rounded text-sm sm:text-base"
 					>
 						<item.icon className="w-4 h-4 sm:w-5 sm:h-5" />

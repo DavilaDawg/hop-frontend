@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Logo } from "@/components/ui/Logo";
 import Link from "next/link";
@@ -14,7 +14,10 @@ const LeftSidebar = () => {
 			<nav className="flex-1 flex flex-col items-center">
 				<Link href="/friends">
 					{/* biome-ignore lint/a11y/useButtonType: <explanation> */}
-					<button className="bg-gray-800 w-[240px] h-[40px] mt-1 flex items-center justify-center rounded transition-transform transform hover:scale-105">
+					<button
+						suppressHydrationWarning
+						className="bg-gray-800 w-[240px] h-[40px] mt-1 flex items-center justify-center rounded transition-transform transform hover:scale-105"
+					>
 						<FaUserFriends className="text-2xl text-black mr-3" />
 						<span>Friends</span>
 					</button>
