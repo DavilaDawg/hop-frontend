@@ -1,11 +1,9 @@
 import Image from "next/image";
 import { FaRegUserCircle } from "react-icons/fa";
-import classNames from "classnames";
 interface AvatarProps {
 	icon?: string;
 	username: string;
 	nickname?: string;
-	size?: "small" | "medium" | "large";
 	color?: string;
 }
 
@@ -13,29 +11,12 @@ const Avatar: React.FC<AvatarProps> = ({
 	icon,
 	username,
 	nickname,
-	size = "medium",
-	color = "blue",
+	color = "blue", // eventually send this prop
 }) => {
-	const sizeClasses = {
-		small: "w-8 h-8 text-xs",
-		medium: "w-12 h-12 text-sm",
-		large: "w-16 h-16 text-base",
-	};
-	const sizeClass = sizeClasses[size] || sizeClasses.medium;
-
-	function classNames(sizeClass: string, arg1: string): string | undefined {
-		throw new Error("Function not implemented.");
-	}
 
 	return (
 		<div className="relative inline-block ml-5 mt-5 group">
-			<div
-				className={classNames(
-					sizeClass,
-					"relative rounded-full overflow-hidden flex items-center justify-center border-3",
-				)}
-				style={{ borderColor: color }}
-			>
+			<div className="relative rounded-full overflow-hidden flex items-center justify-center border-3 w-12 h-12 text-sm">
 				{icon ? (
 					<Image
 						src={icon}
