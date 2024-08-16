@@ -1,5 +1,5 @@
 export class ApiService {
-  private BASE_URL = 'http://hop-backend.fly.dev/api';
+  private BASE_URL = 'https://hop-backend.fly.dev/api';
   private accessToken = '';
   private refreshToken = '';
 
