@@ -166,7 +166,7 @@ const CreateSpaceForm: React.FC = () => {
 		);
 	};
 
-	const spaceUrl = spaceId ? `http://localhost:3000/space/${spaceId}` : null;
+	const spaceUrl = spaceId ? `http://https://hop-frontend-mu.vercel.app/space/${spaceId}` : null;
 
 	return (
 		<div className="w-full max-w-md mx-auto p-4 bg-gray-800 rounded-lg">

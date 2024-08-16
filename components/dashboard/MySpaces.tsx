@@ -61,7 +61,7 @@ const UserSpaces = () => {
 	}, []);
 
 	const openVNC = (spaceId: string) => {
-		const spaceUrl = `http://localhost:3000/space/${spaceId}`;
+		const spaceUrl = `https://hop-frontend-mu.vercel.app/${spaceId}`;
 		window.open(spaceUrl, "_blank");
 	};
 
@@ -70,7 +70,7 @@ const UserSpaces = () => {
 	};
 
 	const copyToClipboard = (space: Space) => {
-		const spaceUrl = `http://localhost:3000/space/${space.id}`;
+		const spaceUrl = `https://hop-frontend-mu.vercel.app/${space.id}`;
 		const textToCopy = `Space URL: ${spaceUrl}\nPassword: ${space.password}`;
 		navigator.clipboard.writeText(textToCopy).then(() => {
 			setCopiedSpaceId(space.id);
