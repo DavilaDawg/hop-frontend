@@ -33,7 +33,7 @@ const Onboard: React.FC = () => {
 
 			const { accessToken, refreshToken } = await user.getAuthJson()
 			if (!accessToken || !refreshToken)  return null
-      const response = await fetch('http://localhost:8080/api/user', {
+      const response = await fetch('http://hop-backend.fly.dev/api/user', {
 				headers: {
 					'x-stack-access-token': accessToken,
 					'x-stack-refresh-token': refreshToken,
