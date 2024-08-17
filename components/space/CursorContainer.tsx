@@ -100,12 +100,17 @@ const CursorContainer: React.FC<HomeProps> = ({
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		sendJsonMessage({
+			type: "pfp_nickname",
+			username: username,
+			pfp: pfp,
+			nickname: nickname,
+		});
+		
+		sendJsonMessage({
 			x: 0,
 			y: 0,
 			cursor: selectedCursor,
 			username: username,
-			pfp: pfp,
-			nickname: nickname,
 			color: color,
 		});
 
