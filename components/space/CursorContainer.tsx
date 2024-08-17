@@ -139,7 +139,7 @@ const CursorContainer: React.FC<HomeProps> = ({
 				container.removeEventListener("mousemove", handleMouseMove);
 			}
 		};
-	}, [sendJsonMessage, pfp, nickname]);
+	}, [sendJsonMessage]);
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
