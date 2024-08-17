@@ -6,8 +6,6 @@ import { Cursor } from "./Cursor";
 import { CustomCursor } from "./CustomCursor";
 interface UserState {
 	username: string;
-	pfp: string;
-	nickname: string;
 	color: string;
 	cursor: string;
 	x: number;
@@ -15,6 +13,8 @@ interface UserState {
 }
 interface User {
 	username: string;
+	nickname: string;
+	pfp: string;
 	state: UserState;
 }
 interface Users {

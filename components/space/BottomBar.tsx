@@ -8,8 +8,6 @@ import { useEffect, useState } from "react";
 import { ServiceMethods } from "@lib/servicesMethods";
 interface UserState {
 	username: string;
-	pfp: string;
-	nickname: string;
 	color: string;
 	cursor: string;
 	x: number;
@@ -17,6 +15,8 @@ interface UserState {
 }
 interface User {
 	username: string;
+	nickname: string;
+	pfp: string;
 	state: UserState;
 }
 interface Users {
@@ -59,7 +59,7 @@ const BottomBar: React.FC<BottomBarProps> = ({
 				setNickname(result.nickname);
 				setPfp(result.profilePicture);
 			} else {
-				setUsername("User1"); // CHANGE TO RANDOME NUMBER
+				setUsername("User1"); // CHANGE TO RANDOM NUMBER
 				setNickname("user");
 				setPfp("");
 			}
@@ -77,8 +77,8 @@ const BottomBar: React.FC<BottomBarProps> = ({
 					const user = otherUsers[uuid];
 
 					const userUsername = user?.username || "Unknown";
-					const userNickname = user?.state?.nickname || "No nickname";
-					const userPfp = user?.state?.pfp || "";
+					const userNickname = user?.nickname || "No nickname";
+					const userPfp = user?.pfp || "";
 
 					return (
 						<Avatar
