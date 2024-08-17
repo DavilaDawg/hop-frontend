@@ -65,12 +65,11 @@ const BottomBar: React.FC<BottomBarProps> = ({setSelectedCursor, otherUsers}) =>
 				<Avatar username={username} nickname={nickname} icon={pfp} />
 
 				{Object.keys(otherUsers).map((uuid) => {
-					const { username, state } = otherUsers[uuid];
+					const { username } = otherUsers[uuid];
 					return (
 						<Avatar
 							key={uuid}
 							username={username}
-							nickname={state.username} // CHANGE THIS 
 						/>
 					);
 				})}
