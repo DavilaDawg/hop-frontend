@@ -91,8 +91,6 @@ const SpacePage: React.FC = () => {
 							{enterSpace ? (
 								<CursorContainer
 									username={username}
-									pfp={pfp}
-									nickname={nickname}
 									color={color}
 									selectedCursor={selectedCursor}
 									otherUsers={otherUsers}
@@ -104,6 +102,8 @@ const SpacePage: React.FC = () => {
 									onSubmit={setEnterSpace}
 									setColorProp={setColor}
 									username={username}
+									pfp={pfp}
+									nickname={nickname}
 								/>
 							)}
 							<VncDisplay spaceId={spaceId} />

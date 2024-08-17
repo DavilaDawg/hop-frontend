@@ -9,12 +9,16 @@ interface NicknameProps {
 	onSubmit: (enterSpace: boolean) => void;
 	setColorProp: (color: string) => void;
 	username: string;
+	pfp: string;
+	nickname: string; 
 }
 
 const EnterSpace: React.FC<NicknameProps> = ({
 	onSubmit,
 	setColorProp,
 	username,
+	pfp,
+	nickname,
 }) => {
 	const [color, setColor] = useState("");
 	const [wsUrl, setWsUrl] = useState<string | null>(null);
@@ -37,7 +41,7 @@ const EnterSpace: React.FC<NicknameProps> = ({
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		setWsUrl(
-			`wss://hop-websocket1-76a542d0c47b.herokuapp.com?username=${encodeURIComponent(username)}`,
+			`wss://hop-websocket1-76a542d0c47b.herokuapp.com?username=${encodeURIComponent(username)}&pfp=${encodeURIComponent(pfp)}&nickname=${nickname}`,
 		);
 	}, []);
 
@@ -46,6 +50,8 @@ const EnterSpace: React.FC<NicknameProps> = ({
 		sendJsonMessage({
 			type: "setUsername",
 			username: username,
+			pfp: pfp,
+			nickname: nickname,
 		});
 	};
 
