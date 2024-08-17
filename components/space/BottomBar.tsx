@@ -73,7 +73,7 @@ const BottomBar: React.FC<BottomBarProps> = ({setSelectedCursor, otherUsers}) =>
 						<Avatar
 							key={uuid}
 							username={username}
-							nickname={state.username}
+							//nickname={state.username}
 							icon={state.pfp}
 						/>
 					);
