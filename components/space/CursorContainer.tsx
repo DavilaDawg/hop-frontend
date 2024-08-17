@@ -6,6 +6,8 @@ import { Cursor } from "./Cursor";
 import { CustomCursor } from "./CustomCursor";
 interface UserState {
 	username: string;
+	pfp: string;
+	nickname: string;
 	color: string;
 	cursor: string;
 	x: number;
@@ -20,6 +22,8 @@ interface Users {
 }
 interface HomeProps {
 	username: string;
+	pfp: string;
+	nickname: string;
 	color: string;
 	selectedCursor: string;
 	otherUsers: Users;
@@ -73,6 +77,8 @@ const renderUsersList = (users: Users) => {
 
 const CursorContainer: React.FC<HomeProps> = ({
 	username,
+	pfp,
+	nickname,
 	color,
 	selectedCursor,
 	otherUsers,
@@ -81,7 +87,7 @@ const CursorContainer: React.FC<HomeProps> = ({
 	const [isTracking, setIsTracking] = useState(true);
 	const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-	const WS_URL = `wss://hop-websocket1-76a542d0c47b.herokuapp.com?username=${encodeURIComponent(username)}&selectedCursor=${encodeURIComponent(selectedCursor)}&color=${encodeURIComponent(color)}`;
+	const WS_URL = `wss://hop-websocket1-76a542d0c47b.herokuapp.com?username=${encodeURIComponent(username)}&selectedCursor=${encodeURIComponent(selectedCursor)}&color=${encodeURIComponent(color)}&pfp=${encodeURIComponent(pfp)}&nickname=${encodeURIComponent(nickname)}`;
 
 	const containerRef = useRef<HTMLDivElement>(null);
 
@@ -98,6 +104,8 @@ const CursorContainer: React.FC<HomeProps> = ({
 			y: 0,
 			cursor: selectedCursor,
 			username: username,
+			pfp: pfp,
+			nickname: nickname,
 			color: color,
 		});
 
@@ -148,7 +156,6 @@ const CursorContainer: React.FC<HomeProps> = ({
 				}
 				return acc;
 			}, {});
-
 			setOtherUsers(filteredUsers);
 		}
 	}, [lastJsonMessage, username]);

@@ -13,6 +13,8 @@ import Image from "next/image";
 
 interface UserState {
 	username: string;
+	pfp: string;
+	nickname: string;
 	color: string;
 	cursor: string;
 	x: number;
@@ -30,6 +32,8 @@ const SpacePage: React.FC = () => {
 	const params = useParams();
 	const spaceId = params.spaceId as string;
 	const [username, setUsername] = useState("");
+	const [pfp, setPfp] = useState("")
+	const [nickname, setNickname] = useState("")
 	const [color, setColor] = useState<string>("");
 	const [selectedCursor, setSelectedCursor] = useState<string>("");
 	const [enterSpace, setEnterSpace] = useState<boolean>(false);
@@ -60,6 +64,8 @@ const SpacePage: React.FC = () => {
 			const result = await fetch();
 			if (result) {
 				setUsername(result.username);
+				setPfp(result.profilePicture);
+				setNickname(result.nickname);
 			} else {
 				const randNum: number = getRandomInt(1, 100);
 				setUsername(`user${randNum}`);
@@ -85,10 +91,13 @@ const SpacePage: React.FC = () => {
 							{enterSpace ? (
 								<CursorContainer
 									username={username}
+									pfp={pfp}
+									nickname={nickname}
 									color={color}
 									selectedCursor={selectedCursor}
 									otherUsers={otherUsers}
 									setOtherUsers={setOtherUsers}
+									
 								/>
 							) : (
 								<EnterSpace

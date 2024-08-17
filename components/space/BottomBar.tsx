@@ -8,6 +8,8 @@ import { useEffect, useState } from "react";
 import { ServiceMethods } from "@lib/servicesMethods";
 interface UserState {
 	username: string;
+	pfp: string; 
+	nickname: string;
 	color: string;
 	cursor: string;
 	x: number;
@@ -29,6 +31,7 @@ const BottomBar: React.FC<BottomBarProps> = ({setSelectedCursor, otherUsers}) =>
 	const [username, setUsername] = useState("");
 	const [nickname, setnickname] = useState("");
 	const [pfp, setPfp] = useState("");
+
 	const user = useUser({ or: "redirect" });
 
 	const fetch = async () => {
@@ -52,7 +55,7 @@ const BottomBar: React.FC<BottomBarProps> = ({setSelectedCursor, otherUsers}) =>
 				setnickname(result.nickname);
 				setPfp(result.profilePicture);
 			} else {
-				setUsername("User1");
+				setUsername("User1"); // CHANGE TO RANDOME NUMBER
 			}
 		};
 		fetchAndSetUserData();
@@ -65,11 +68,13 @@ const BottomBar: React.FC<BottomBarProps> = ({setSelectedCursor, otherUsers}) =>
 				<Avatar username={username} nickname={nickname} icon={pfp} />
 
 				{Object.keys(otherUsers).map((uuid) => {
-					const { username } = otherUsers[uuid];
+					const { username, state } = otherUsers[uuid];
 					return (
 						<Avatar
 							key={uuid}
 							username={username}
+							nickname={state.nickname}
+							icon={state.pfp}
 						/>
 					);
 				})}
