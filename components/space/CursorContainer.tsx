@@ -146,7 +146,15 @@ const CursorContainer: React.FC<HomeProps> = ({
 						!seenUsernames.has(currentUser.username)
 					) {
 						seenUsernames.add(currentUser.username);
-						acc[uuid] = currentUser;
+						seenUsernames.add(currentUser.nickname);
+						seenUsernames.add(currentUser.pfp);
+						
+						acc[uuid] = {
+							username: currentUser.username,
+							nickname: currentUser.nickname, 
+							pfp: currentUser.pfp,           
+							state: currentUser.state
+						  };
 					}
 					return acc;
 				}, {});
