@@ -44,7 +44,7 @@ const ChatContainer: React.FC = () => {
 	}, [user]);
 
 	const WS_URL = useMemo(
-		() => `wss://https://hop-websocket1-76a542d0c47b.herokuapp.com?username=${encodeURIComponent(username)}`,
+		() => `wss://hop-websocket1-76a542d0c47b.herokuapp.com?username=${encodeURIComponent(username)}`,
 		[username],
 	);
 
