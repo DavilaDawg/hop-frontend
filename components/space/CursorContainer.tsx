@@ -117,8 +117,8 @@ const CursorContainer: React.FC<HomeProps> = ({
 					y: e.clientY - rect.top,
 					cursor: selectedCursor,
 					username: username,
-					nickname: nickname,
 					pfp: pfp,
+					nickname: nickname,
 					color: color,
 				};
 				setMousePosition(data);
@@ -139,7 +139,7 @@ const CursorContainer: React.FC<HomeProps> = ({
 				container.removeEventListener("mousemove", handleMouseMove);
 			}
 		};
-	}, [sendJsonMessage]);
+	}, [sendJsonMessage, pfp, nickname]);
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {

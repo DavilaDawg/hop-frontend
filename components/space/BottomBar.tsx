@@ -34,6 +34,7 @@ const BottomBar: React.FC<BottomBarProps> = ({
 	const [username, setUsername] = useState("");
 	const [nickname, setNickname] = useState("");
 	const [pfp, setPfp] = useState("");
+	console.log("otherUsers: ", otherUsers)
 
 	const user = useUser({ or: "redirect" });
 
