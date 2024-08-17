@@ -43,10 +43,7 @@ const ChatContainer: React.FC = () => {
 		fetchAndSetUserData();
 	}, [user]);
 
-	const WS_URL = useMemo(
-		() => `wss://hop-websocket1-76a542d0c47b.herokuapp.com?username=${encodeURIComponent(username)}`,
-		[username],
-	);
+	const WS_URL = `wss://hop-websocket1-76a542d0c47b.herokuapp.com?username=${encodeURIComponent(username)}`;
 
 	const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(WS_URL);
 
