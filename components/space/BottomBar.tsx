@@ -25,7 +25,7 @@ interface BottomBarProps {
 	otherUsers: Users;
 }
 
-const BottomBar: React.FC<BottomBarProps> = (setSelectedCursor, otherUsers) => {
+const BottomBar: React.FC<BottomBarProps> = ({setSelectedCursor, otherUsers}) => {
 	const [username, setUsername] = useState("");
 	const [nickname, setnickname] = useState("");
 	const [pfp, setPfp] = useState("");
