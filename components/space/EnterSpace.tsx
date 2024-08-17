@@ -37,7 +37,7 @@ const EnterSpace: React.FC<NicknameProps> = ({
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		setWsUrl(
-			`ws://localhost:8000?username=${encodeURIComponent(username)}`,
+			`wss://hop-websocket1-76a542d0c47b.herokuapp.com?username=${encodeURIComponent(username)}`,
 		);
 	}, []);
 

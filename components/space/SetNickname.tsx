@@ -35,7 +35,7 @@ const SetNickname: React.FC<NicknameProps> = ({
 	useEffect(() => {
 		if (realUsername) {
 			setWsUrl(
-				`ws://localhost:8000?username=${encodeURIComponent(realUsername)}`,
+				`wss://hop-websocket1-76a542d0c47b.herokuapp.com?username=${encodeURIComponent(realUsername)}`,
 			);
 		}
 	}, [realUsername]);
