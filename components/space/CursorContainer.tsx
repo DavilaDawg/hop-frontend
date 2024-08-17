@@ -136,21 +136,24 @@ const CursorContainer: React.FC<HomeProps> = ({
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		if (lastJsonMessage) {
-			const users = lastJsonMessage as Users;
-			const seenUsernames = new Set<string>();
+			const timer = setTimeout(() => {
+				const users = lastJsonMessage as Users;
+				const seenUsernames = new Set<string>();
 
-			const filteredUsers = Object.keys(users).reduce<Users>((acc, uuid) => {
-				const currentUser = users[uuid];
-				if (
-					currentUser.username !== username &&
-					!seenUsernames.has(currentUser.username)
-				) {
-					seenUsernames.add(currentUser.username);
-					acc[uuid] = currentUser;
-				}
-				return acc;
-			}, {});
-			setOtherUsers(filteredUsers);
+				const filteredUsers = Object.keys(users).reduce<Users>((acc, uuid) => {
+					const currentUser = users[uuid];
+					if (
+						currentUser.username !== username &&
+						!seenUsernames.has(currentUser.username)
+					) {
+						seenUsernames.add(currentUser.username);
+						acc[uuid] = currentUser;
+					}
+					return acc;
+				}, {});
+				setOtherUsers(filteredUsers);
+			}, 200);
+			return () => clearTimeout(timer);
 		}
 	}, [lastJsonMessage, username]);
 
