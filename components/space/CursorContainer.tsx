@@ -136,7 +136,6 @@ const CursorContainer: React.FC<HomeProps> = ({
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		if (lastJsonMessage) {
-			const timer = setTimeout(() => {
 				const users = lastJsonMessage as Users;
 				const seenUsernames = new Set<string>();
 
@@ -152,8 +151,6 @@ const CursorContainer: React.FC<HomeProps> = ({
 					return acc;
 				}, {});
 				setOtherUsers(filteredUsers);
-			}, 200);
-			return () => clearTimeout(timer);
 		}
 	}, [lastJsonMessage, username]);
 
