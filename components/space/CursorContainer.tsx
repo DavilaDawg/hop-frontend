@@ -22,7 +22,7 @@ interface HomeProps {
 	username: string;
 	color: string;
 	selectedCursor: string;
-	otherUsers: Users
+	otherUsers: Users;
 	setOtherUsers: React.Dispatch<React.SetStateAction<Users>>;
 }
 
@@ -51,7 +51,7 @@ const renderCursors = (
 				) : (
 					<CustomCursor
 						key={uuid}
-						point={[x,y]}
+						point={[x, y]}
 						imageUrl={user.state?.cursor}
 						username={user.state?.username}
 					/>
@@ -76,7 +76,7 @@ const CursorContainer: React.FC<HomeProps> = ({
 	color,
 	selectedCursor,
 	otherUsers,
-	setOtherUsers
+	setOtherUsers,
 }) => {
 	const [isTracking, setIsTracking] = useState(true);
 	const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -135,9 +135,16 @@ const CursorContainer: React.FC<HomeProps> = ({
 	useEffect(() => {
 		if (lastJsonMessage) {
 			const users = lastJsonMessage as Users;
+			const seenUsernames = new Set<string>();
+
 			const filteredUsers = Object.keys(users).reduce<Users>((acc, uuid) => {
-				if (users[uuid].username !== username) {
-					acc[uuid] = users[uuid];
+				const currentUser = users[uuid];
+				if (
+					currentUser.username !== username &&
+					!seenUsernames.has(currentUser.username)
+				) {
+					seenUsernames.add(currentUser.username);
+					acc[uuid] = currentUser;
 				}
 				return acc;
 			}, {});
