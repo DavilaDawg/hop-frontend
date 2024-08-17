@@ -81,7 +81,7 @@ const CursorContainer: React.FC<HomeProps> = ({
 	const [isTracking, setIsTracking] = useState(true);
 	const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-	const WS_URL = `ws://localhost:8000?username=${encodeURIComponent(username)}&selectedCursor=${encodeURIComponent(selectedCursor)}&color=${encodeURIComponent(color)}`;
+	const WS_URL = `wss://https://hop-websocket1-76a542d0c47b.herokuapp.com?username=${encodeURIComponent(username)}&selectedCursor=${encodeURIComponent(selectedCursor)}&color=${encodeURIComponent(color)}`;
 
 	const containerRef = useRef<HTMLDivElement>(null);
 
