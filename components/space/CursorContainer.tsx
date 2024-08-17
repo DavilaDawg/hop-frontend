@@ -117,8 +117,6 @@ const CursorContainer: React.FC<HomeProps> = ({
 					y: e.clientY - rect.top,
 					cursor: selectedCursor,
 					username: username,
-					pfp: pfp,
-					nickname: nickname,
 					color: color,
 				};
 				setMousePosition(data);
