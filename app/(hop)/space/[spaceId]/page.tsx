@@ -75,51 +75,82 @@ const SpacePage: React.FC = () => {
 		fetchAndSetUserData();
 	}, [user]);
 
-	return (
-		<>
-			<Image
-				src="/hop.png"
-				alt="Logo"
-				width={150}
-				height={150}
-				priority
-				className="fixed z-50 left-60 mt-[21.5%] -rotate-90"
-			/>
-			<div className="relative flex h-screen flex-col overflow-hidden">
-				<div className="flex flex-grow overflow-hidden relative">
-					<main className="flex-grow flex flex-col relative ">
-						<div className="relative flex-grow flex items-center justify-center">
-							{enterSpace ? (
-								<CursorContainer
-									username={username}
-									nickname={nickname}
-									pfp={pfp}
-									color={color}
-									selectedCursor={selectedCursor}
-									otherUsers={otherUsers}
-									setOtherUsers={setOtherUsers}
-								/>
-							) : (
-								<EnterSpace
-									onSubmit={setEnterSpace}
-									setColorProp={setColor}
-									username={username}
-									pfp={pfp}
-									nickname={nickname}
-								/>
-							)}
-							<VncDisplay spaceId={spaceId} />
-						</div>
-						<BottomBar
-							setSelectedCursor={setSelectedCursor}
-							otherUsers={otherUsers}
-						/>
-					</main>
-					<RightSideBar />
-				</div>
-			</div>
-		</>
-	);
-};
+	const [wsUrl, setWsUrl] = useState<string | null>(null);
 
-export default SpacePage;
+	// WebSocket hook
+	const { sendJsonMessage } = useWebSocket(wsUrl, {
+	  shouldReconnect: () => true,
+	  reconnectAttempts: 100,
+	  share: true,
+	});
+
+	useEffect(() => {
+		if (username && pfp && nickname) {
+		  setWsUrl(
+			`wss://hop-websocket1-76a542d0c47b.herokuapp.com?username=${encodeURIComponent(username)}&pfp=${encodeURIComponent(pfp)}&nickname=${encodeURIComponent(nickname)}`
+		  );
+		}
+	  }, [username, pfp, nickname]);
+	
+	  // Modified handleEnterSpace function
+	  const handleEnterSpace = (enterSpace: boolean) => {
+		setEnterSpace(enterSpace);
+		if (enterSpace) {
+		  sendJsonMessage({
+			type: "setUsername",
+			username: username,
+			pfp: pfp,
+			nickname: nickname,
+		  });
+		}
+	  };
+
+	  
+	  return (
+		<>
+		  <Image
+			src="/hop.png"
+			alt="Logo"
+			width={150}
+			height={150}
+			priority
+			className="fixed z-50 left-60 mt-[21.5%] -rotate-90"
+		  />
+		  <div className="relative flex h-screen flex-col overflow-hidden">
+			<div className="flex flex-grow overflow-hidden relative">
+			  <main className="flex-grow flex flex-col relative ">
+				<div className="relative flex-grow flex items-center justify-center">
+				  {enterSpace ? (
+					<CursorContainer
+					  username={username}
+					  nickname={nickname}
+					  pfp={pfp}
+					  color={color}
+					  selectedCursor={selectedCursor}
+					  otherUsers={otherUsers}
+					  setOtherUsers={setOtherUsers}
+					/>
+				  ) : (
+					<EnterSpace
+					  onSubmit={handleEnterSpace}
+					  setColorProp={setColor}
+					  username={username}
+					  pfp={pfp}
+					  nickname={nickname}
+					/>
+				  )}
+				  <VncDisplay spaceId={spaceId} />
+				</div>
+				<BottomBar
+				  setSelectedCursor={setSelectedCursor}
+				  otherUsers={otherUsers}
+				/>
+			  </main>
+			  <RightSideBar />
+			</div>
+		  </div>
+		</>
+	  );
+	};
+	
+	export default SpacePage;
