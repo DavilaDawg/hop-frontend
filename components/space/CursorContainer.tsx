@@ -145,7 +145,7 @@ const CursorContainer: React.FC<HomeProps> = ({
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
-		sendJsonMessage("")
+		sendJsonMessageThrottled.current("")
 		if (lastJsonMessage) {
 			const users = lastJsonMessage as Users;
 			console.log("users", users);
@@ -173,7 +173,7 @@ const CursorContainer: React.FC<HomeProps> = ({
 			setOtherUsers(filteredUsers);
 			console.log("filteredUsers", filteredUsers);
 		}
-	}, [lastJsonMessage]); // add new message stuff
+	}, [lastJsonMessage]); 
 
 	const handleMouseDown = () => {
 		setIsTracking(false);
