@@ -46,17 +46,6 @@ const ChatContainer: React.FC = () => {
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
-		const fetchAndSetUserData = async () => {
-			const result = await fetch();
-			if (result) {
-				setUsername(result.username);
-			}
-		};
-		fetchAndSetUserData();
-	}, [user]);
-
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-	useEffect(() => {
 		if (!username) return;
 
 		const connectWebSocket = () => {
@@ -65,6 +54,11 @@ const ChatContainer: React.FC = () => {
 	  
 			ws.onopen = () => {
 			  console.log("WebSocket connected");
+			  const joinMessage = {
+				type: "join",
+				username: username,
+			  };
+			  ws.send(JSON.stringify(joinMessage));
 			};
 	  
 			ws.onmessage = (event) => {
@@ -83,7 +77,7 @@ const ChatContainer: React.FC = () => {
 	  
 			ws.onclose = () => {
 			  console.log("WebSocket disconnected, attempting to reconnect in 3 seconds...");
-			  setInterval(connectWebSocket, 3000); 
+			  setTimeout(connectWebSocket, 3000); 
 			};
 	  
 			wsRef.current = ws;
@@ -96,7 +90,7 @@ const ChatContainer: React.FC = () => {
 			  wsRef.current.close();
 			}
 		  };
-		}, [username]);
+		}, [username]); 
 
 	const handleSendMessage = () => {
 		if (inputMessage.trim() && wsRef.current) {
