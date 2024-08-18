@@ -19,6 +19,7 @@ const ChatContainer: React.FC = () => {
 	const [username, setUsername] = useState("");
 	const user = useUser({ or: "redirect" });
 	const wsRef = useRef<WebSocket | null>(null);
+	const isInitialConnection = useRef(true);
 
 	const fetch = async () => {
 		try {
@@ -52,11 +53,14 @@ const ChatContainer: React.FC = () => {
 			const ws = new WebSocket(WS_URL);
 
 			ws.onopen = () => {
-				const joinMessage = {
-					type: "join",
-					username: username,
-				};
-				ws.send(JSON.stringify(joinMessage));
+				if (isInitialConnection.current) {
+					const joinMessage = {
+						type: "join",
+						username: username,
+					};
+					ws.send(JSON.stringify(joinMessage));
+					isInitialConnection.current = false;
+				}
 			};
 
 			ws.onmessage = (event) => {
@@ -112,6 +116,7 @@ const ChatContainer: React.FC = () => {
 				<div className="flex-grow overflow-y-auto">
 					<ScrollBar>
 						{messages.map((msg, index) => {
+							if (!msg.username) return null;
 							const isJoinMessage = msg.type === "join";
 							const messageClasses = isJoinMessage
 								? "bg-green-100 text-green-800 border-green-300"
