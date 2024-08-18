@@ -19,7 +19,8 @@ const ChatContainer: React.FC = () => {
 	const [username, setUsername] = useState("");
 	const user = useUser({ or: "redirect" });
 	const wsRef = useRef<WebSocket | null>(null);
-	const isInitialConnection = useRef(true);
+	const connectionCount = useRef(0);
+	const lastConnectionState = useRef<number | null>(null);
 
 	const fetch = async () => {
 		try {
@@ -52,16 +53,26 @@ const ChatContainer: React.FC = () => {
 			const ws = new WebSocket(WS_URL);
 
 			ws.onopen = () => {
-				console.log("open ws")
+				console.log("open ws");
+				if (
+					lastConnectionState.current === WebSocket.CLOSED ||
+					lastConnectionState.current === null
+				) {
+					connectionCount.current += 1;
+					console.log("connection count", connectionCount)
+					const joinMessage = {
+						type: "join",
+						username: username,
+					};
+					ws.send(JSON.stringify(joinMessage));
+				}
+				lastConnectionState.current = WebSocket.OPEN;
 			};
 
 			ws.onmessage = (event) => {
 				try {
 					const data = JSON.parse(event.data) as ChatMessage;
-					if (
-						data.type === "chat" ||
-						(data.type === "join" && data.username)
-					) {
+					if (data.type === "chat" || (data.type === "join" && data.username)) {
 						setMessages((prevMessages) => [...prevMessages, data]);
 					}
 				} catch (error) {
@@ -73,6 +84,7 @@ const ChatContainer: React.FC = () => {
 				console.log(
 					"WebSocket disconnected, attempting to reconnect in 3 seconds...",
 				);
+				lastConnectionState.current = WebSocket.CLOSED;
 				setTimeout(connectWebSocket, 3000);
 			};
 
