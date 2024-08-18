@@ -74,10 +74,6 @@ const EnterSpace: React.FC<NicknameProps> = ({
 				>
 					Hop In
 				</button>
-
-				<div className="flex-grow bg-white rounded-xl p-4 flex flex-col">
-					<p>Connecting</p>
-				</div>
 			</div>
 		</div>
 	);
