@@ -25,7 +25,7 @@ const EnterSpace: React.FC<NicknameProps> = ({
 
 	const { sendJsonMessage } = useWebSocket(wsUrl, {
 		shouldReconnect: () => true,
-		reconnectAttempts: 1,
+		reconnectAttempts: 100,
 		share: true,
 	});
 

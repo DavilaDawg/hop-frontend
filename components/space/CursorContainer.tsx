@@ -79,8 +79,8 @@ const CursorContainer: React.FC<HomeProps> = ({
 	username,
 	color,
 	selectedCursor,
-	pfp, 
-	nickname, 
+	pfp,
+	nickname,
 	otherUsers,
 	setOtherUsers,
 }) => {
@@ -91,14 +91,11 @@ const CursorContainer: React.FC<HomeProps> = ({
 
 	const containerRef = useRef<HTMLDivElement>(null);
 
-	const { sendJsonMessage, lastJsonMessage } = useWebSocket(WS_URL);
-	/*
-	const { sendJsonMessage } = useWebSocket(wsUrl, {
+	const { sendJsonMessage, lastJsonMessage } = useWebSocket(WS_URL, {
 		shouldReconnect: () => true,
-		reconnectAttempts: 0,
+		reconnectAttempts: 100,
 		share: true,
 	});
-	*/
 
 	const THROTTLE = 10;
 
@@ -106,18 +103,16 @@ const CursorContainer: React.FC<HomeProps> = ({
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
-		console.log("first message", username, nickname, pfp, color )
+		console.log("first message", username, nickname, pfp, color);
 		sendJsonMessage({
 			x: 0,
 			y: 0,
 			cursor: selectedCursor,
 			username: username,
-			nickname: nickname, 
+			nickname: nickname,
 			pfp: pfp,
 			color: color,
 		});
-
-		
 
 		const handleMouseMove = (e: MouseEvent) => {
 			if (containerRef.current) {
@@ -152,29 +147,31 @@ const CursorContainer: React.FC<HomeProps> = ({
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		if (lastJsonMessage) {
-				const users = lastJsonMessage as Users;
-				console.log("users", users)
-				const seenUsernames = new Set<string>();
+			const users = lastJsonMessage as Users;
+			console.log("users", users);
+			const seenUsernames = new Set<string>();
 
-				const filteredUsers = Object.keys(users).reduce<Users>((acc, uuid) => {
-					const currentUser = users[uuid];
-					if (
-						currentUser.username !== username &&
-						!seenUsernames.has(currentUser.username) && currentUser.username !== "" && currentUser.pfp
-					) {
-						seenUsernames.add(currentUser.username);
-						
-						acc[uuid] = {
-							username: currentUser.username, 
-							nickname: currentUser.nickname, 
-							pfp: currentUser.pfp,        
-							state: currentUser.state 
-						  };
-					}
-					return acc;
-				}, {});
-				setOtherUsers(filteredUsers);
-				console.log("filteredUsers", filteredUsers)
+			const filteredUsers = Object.keys(users).reduce<Users>((acc, uuid) => {
+				const currentUser = users[uuid];
+				if (
+					currentUser.username !== username &&
+					!seenUsernames.has(currentUser.username) &&
+					currentUser.username !== "" &&
+					currentUser.pfp
+				) {
+					seenUsernames.add(currentUser.username);
+
+					acc[uuid] = {
+						username: currentUser.username,
+						nickname: currentUser.nickname,
+						pfp: currentUser.pfp,
+						state: currentUser.state,
+					};
+				}
+				return acc;
+			}, {});
+			setOtherUsers(filteredUsers);
+			console.log("filteredUsers", filteredUsers);
 		}
 	}, [lastJsonMessage, username, nickname, pfp, color, selectedCursor]); // add new message stuff
 

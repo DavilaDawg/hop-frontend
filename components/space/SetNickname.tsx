@@ -22,8 +22,8 @@ const SetNickname: React.FC<NicknameProps> = ({
 	const [wsUrl, setWsUrl] = useState<string | null>(null);
 
 	const { sendJsonMessage } = useWebSocket(wsUrl, {
-		shouldReconnect: () => false,
-		reconnectAttempts: 0,
+		shouldReconnect: () => true,
+		reconnectAttempts: 100,
 		share: true,
 	});
 
