@@ -192,6 +192,7 @@ const CursorContainer: React.FC<HomeProps> = ({
 			onMouseUp={handleMouseUp}
 			style={{ pointerEvents: isTracking ? "auto" : "none" }}
 		>
+			<p>Welcome</p>
 		</div>
 	);
 };
