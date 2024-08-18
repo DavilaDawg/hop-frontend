@@ -4,7 +4,6 @@ import ScrollBar from "@components/ui/SrollBar";
 import type React from "react";
 import { useState, useEffect, useRef } from "react";
 import { FiSend, FiSmile } from "react-icons/fi";
-import useWebSocket from "react-use-websocket";
 import { ServiceMethods } from "@lib/servicesMethods";
 import { useUser } from "@stackframe/stack";
 
@@ -51,46 +50,47 @@ const ChatContainer: React.FC = () => {
 		const connectWebSocket = () => {
 			const WS_URL = `wss://hop-websocket1-76a542d0c47b.herokuapp.com?username=${encodeURIComponent(username)}`;
 			const ws = new WebSocket(WS_URL);
-	  
+
 			ws.onopen = () => {
-			  console.log("WebSocket connected");
-			  const joinMessage = {
-				type: "join",
-				username: username,
-			  };
-			  ws.send(JSON.stringify(joinMessage));
+				const joinMessage = {
+					type: "join",
+					username: username,
+				};
+				ws.send(JSON.stringify(joinMessage));
 			};
-	  
+
 			ws.onmessage = (event) => {
-			  try {
-				const data = JSON.parse(event.data) as ChatMessage;
-				if (
-				  data.type === "chat" ||
-				  (data.type === "join" && messages.length < 1)
-				) {
-				  setMessages((prevMessages) => [...prevMessages, data]);
+				try {
+					const data = JSON.parse(event.data) as ChatMessage;
+					if (
+						data.type === "chat" ||
+						(data.type === "join" && messages.length < 1)
+					) {
+						setMessages((prevMessages) => [...prevMessages, data]);
+					}
+				} catch (error) {
+					console.error("Error processing WebSocket message:", error);
 				}
-			  } catch (error) {
-				console.error("Error processing WebSocket message:", error);
-			  }
 			};
-	  
+
 			ws.onclose = () => {
-			  console.log("WebSocket disconnected, attempting to reconnect in 3 seconds...");
-			  setTimeout(connectWebSocket, 3000); 
+				console.log(
+					"WebSocket disconnected, attempting to reconnect in 3 seconds...",
+				);
+				setTimeout(connectWebSocket, 3000);
 			};
-	  
+
 			wsRef.current = ws;
-		  };
-	  
-		  connectWebSocket();
-	  
-		  return () => {
+		};
+
+		connectWebSocket();
+
+		return () => {
 			if (wsRef.current) {
-			  wsRef.current.close();
+				wsRef.current.close();
 			}
-		  };
-		}, [username]); 
+		};
+	}, [username]);
 
 	const handleSendMessage = () => {
 		if (inputMessage.trim() && wsRef.current) {
@@ -123,7 +123,7 @@ const ChatContainer: React.FC = () => {
 									// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
 									key={index}
 								>
-									{isJoinMessage
+									{isJoinMessage && msg.username
 										? `${msg.username} joined`
 										: `${msg.username}: ${msg.message}`}
 								</p>
