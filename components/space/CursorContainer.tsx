@@ -192,15 +192,6 @@ const CursorContainer: React.FC<HomeProps> = ({
 			onMouseUp={handleMouseUp}
 			style={{ pointerEvents: isTracking ? "auto" : "none" }}
 		>
-			<h1>Hello, {username}</h1>
-			<p>Current users:</p>
-			{Object.keys(otherUsers).length === 0 ? (
-				<p>No other users online.</p>
-			) : (
-				<>
-					{renderUsersList(otherUsers)}
-				</>
-			)}
 		</div>
 	);
 };
