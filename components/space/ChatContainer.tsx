@@ -6,7 +6,8 @@ import { useState, useEffect, useRef } from "react";
 import { FiSend, FiSmile } from "react-icons/fi";
 import { ServiceMethods } from "@lib/servicesMethods";
 import { useUser } from "@stackframe/stack";
-
+import data from "@emoji-mart/data";
+import { Picker } from "emoji-mart";
 interface ChatMessage {
 	type: "chat" | "join";
 	username: string;
@@ -17,6 +18,7 @@ const ChatContainer: React.FC = () => {
 	const [messages, setMessages] = useState<ChatMessage[]>([]);
 	const [inputMessage, setInputMessage] = useState("");
 	const [username, setUsername] = useState("");
+	const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 	const user = useUser({ or: "redirect" });
 	const wsRef = useRef<WebSocket | null>(null);
 	const isInitialConnection = useRef(true);
@@ -81,7 +83,6 @@ const ChatContainer: React.FC = () => {
 				setTimeout(connectWebSocket, 3000);
 				setTimeout(connectWebSocket, 20000);
 			};
-
 			wsRef.current = ws;
 		};
 
@@ -105,6 +106,14 @@ const ChatContainer: React.FC = () => {
 			setInputMessage("");
 		}
 	};
+
+	const handleEmojiSelect = (emoji: { native: string }) => {
+		setInputMessage((prevMessage) => prevMessage + emoji.native);
+		setShowEmojiPicker(false);
+	};
+
+	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+	const EmojiPicker: any = Picker;
 
 	return (
 		<div className="flex flex-col h-full p-4">
@@ -136,9 +145,15 @@ const ChatContainer: React.FC = () => {
 						<button
 							type="button"
 							className="absolute left-2 text-gray-500 hover:text-gray-700 focus:outline-none"
+							onClick={() => setShowEmojiPicker(!showEmojiPicker)}
 						>
 							<FiSmile className="w-5 h-5" />
 						</button>
+						{showEmojiPicker && (
+							<div className="absolute bottom-14 left-0">
+								<EmojiPicker data={data} onSelect={handleEmojiSelect} />
+							</div>
+						)}
 						<input
 							type="text"
 							value={inputMessage}
