@@ -89,16 +89,6 @@ const SpacePage: React.FC = () => {
 		}
 	}, [readyState]);
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-	useEffect(() => {
-		sendJsonMessage({
-			type: "footer",
-			username: username,
-			nickname: nickname, 
-			pfp: pfp,
-		});
-	}, [enterSpace]);
-
 	return (
 		<>
 			<Image

@@ -103,7 +103,6 @@ const CursorContainer: React.FC<HomeProps> = ({
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
-		console.log("first message", username, nickname, pfp, color);
 		sendJsonMessage({
 			x: 0,
 			y: 0,
