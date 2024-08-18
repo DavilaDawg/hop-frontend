@@ -98,6 +98,7 @@ const SpacePage: React.FC = () => {
 			try {
 				const data = lastJsonMessage as FooterMessage;
 				setFooterInfo((prev) => [...prev, data]);
+				console.log("footer:", footerInfo)
 			} catch (error) {
 				console.error("Error processing WebSocket message:", error);
 			}

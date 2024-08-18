@@ -154,14 +154,14 @@ const CursorContainer: React.FC<HomeProps> = ({
 					console.log("currentUser:", currentUser)
 					if (
 						currentUser.username !== username &&
-						!seenUsernames.has(currentUser.username)
+						!seenUsernames.has(currentUser.username) && currentUser.username !== ""
 					) {
 						seenUsernames.add(currentUser.username);
 						
 						acc[uuid] = {
 							username: currentUser.username, 
-							nickname: currentUser.nickname, // UNDEFINED
-							pfp: currentUser.pfp,  // UNDEFINED        
+							nickname: currentUser.nickname, 
+							pfp: currentUser.pfp,        
 							state: currentUser.state 
 						  };
 					}
