@@ -173,7 +173,7 @@ const CursorContainer: React.FC<HomeProps> = ({
 				}, {});
 				setOtherUsers(filteredUsers);
 			}
-		}, 2000);
+		}, 500);
 		return () => clearTimeout(timeoutId);
 
 	}, [lastJsonMessage, username]);
@@ -195,7 +195,6 @@ const CursorContainer: React.FC<HomeProps> = ({
 			onMouseUp={handleMouseUp}
 			style={{ pointerEvents: isTracking ? "auto" : "none" }}
 		>
-			<p>Welcome</p>
 		</div>
 	);
 };

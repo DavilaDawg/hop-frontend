@@ -7,7 +7,7 @@ import { FiSend, FiSmile } from "react-icons/fi";
 import { ServiceMethods } from "@lib/servicesMethods";
 import { useUser } from "@stackframe/stack";
 import data from "@emoji-mart/data";
-import { Picker } from "emoji-mart";
+import Picker from "@emoji-mart/react";
 interface ChatMessage {
 	type: "chat" | "join";
 	username: string;
@@ -151,7 +151,7 @@ const ChatContainer: React.FC = () => {
 						</button>
 						{showEmojiPicker && (
 							<div className="absolute bottom-14 left-0">
-								<EmojiPicker data={data} onSelect={handleEmojiSelect} />
+								<Picker data={data} onEmojiSelect={handleEmojiSelect} />
 							</div>
 						)}
 						<input
