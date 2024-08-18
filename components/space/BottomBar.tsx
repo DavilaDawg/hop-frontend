@@ -22,14 +22,22 @@ interface User {
 interface Users {
 	[uuid: string]: User;
 }
+interface FooterMessage {
+	type: "footer";
+	username: string;
+	nickname?: string;
+	pfp?: string;
+}
 interface BottomBarProps {
 	setSelectedCursor: (cursor: string) => void;
 	otherUsers: Users;
+	footerInfo: FooterMessage[];
 }
 
 const BottomBar: React.FC<BottomBarProps> = ({
 	setSelectedCursor,
 	otherUsers,
+	footerInfo,
 }) => {
 	const [username, setUsername] = useState("");
 	const [nickname, setNickname] = useState("");

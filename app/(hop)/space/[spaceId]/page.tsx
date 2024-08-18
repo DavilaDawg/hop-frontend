@@ -10,6 +10,7 @@ import { useState, useEffect, useRef } from "react";
 import CursorContainer from "@components/space/CursorContainer";
 import EnterSpace from "@components/space/EnterSpace";
 import Image from "next/image";
+import useWebSocket from "react-use-websocket";
 
 interface UserState {
 	username: string;
@@ -27,17 +28,24 @@ interface User {
 interface Users {
 	[uuid: string]: User;
 }
+interface FooterMessage {
+	type: "footer";
+	username: string;
+	nickname?: string;
+	pfp?: string;
+}
 
 const SpacePage: React.FC = () => {
 	const params = useParams();
 	const spaceId = params.spaceId as string;
 	const [username, setUsername] = useState("");
-	const [pfp, setPfp] = useState("")
-	const [nickname, setNickname] = useState("")
+	const [pfp, setPfp] = useState("");
+	const [nickname, setNickname] = useState("");
 	const [color, setColor] = useState<string>("");
 	const [selectedCursor, setSelectedCursor] = useState<string>("");
 	const [enterSpace, setEnterSpace] = useState<boolean>(false);
 	const [otherUsers, setOtherUsers] = useState<Users>({});
+	const [footerInfo, setFooterInfo] = useState<FooterMessage[]>([]);
 	const user = useUser({ or: "redirect" });
 	const wsRef = useRef<WebSocket | null>(null);
 
@@ -75,6 +83,37 @@ const SpacePage: React.FC = () => {
 		fetchAndSetUserData();
 	}, [user]);
 
+	const WS_URL = `wss://hop-websocket1-76a542d0c47b.herokuapp.com?username=${encodeURIComponent(username)}&pfp=${encodeURIComponent(pfp)}&nickname=${encodeURIComponent(nickname)}`;
+
+	const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(WS_URL);
+
+	useEffect(() => {
+		if (readyState === WebSocket.CLOSED) {
+			console.error("WebSocket connection closed unexpectedly");
+		}
+	}, [readyState]);
+
+	useEffect(() => {
+		if (lastJsonMessage) {
+			try {
+				const data = lastJsonMessage as FooterMessage;
+				setFooterInfo((prev) => [...prev, data]);
+			} catch (error) {
+				console.error("Error processing WebSocket message:", error);
+			}
+		}
+	}, [lastJsonMessage]);
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+	useEffect(() => {
+		sendJsonMessage({
+			type: "footer",
+			username: username,
+			nickname: nickname, 
+			pfp: pfp,
+		});
+	}, [enterSpace]);
+
 	return (
 		<>
 			<Image
@@ -92,13 +131,12 @@ const SpacePage: React.FC = () => {
 							{enterSpace ? (
 								<CursorContainer
 									username={username}
-									nickname= {nickname}
+									nickname={nickname}
 									pfp={pfp}
 									color={color}
 									selectedCursor={selectedCursor}
 									otherUsers={otherUsers}
 									setOtherUsers={setOtherUsers}
-									
 								/>
 							) : (
 								<EnterSpace
@@ -114,6 +152,7 @@ const SpacePage: React.FC = () => {
 						<BottomBar
 							setSelectedCursor={setSelectedCursor}
 							otherUsers={otherUsers}
+							footerInfo={footerInfo}
 						/>
 					</main>
 					<RightSideBar />
