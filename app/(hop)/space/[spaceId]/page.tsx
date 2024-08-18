@@ -84,7 +84,7 @@ const SpacePage: React.FC = () => {
 
 	const WS_URL = `wss://hop-websocket1-76a542d0c47b.herokuapp.com?username=${encodeURIComponent(username)}&pfp=${encodeURIComponent(pfp)}&nickname=${encodeURIComponent(nickname)}`;
 
-	const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(WS_URL);
+	const { sendJsonMessage, readyState } = useWebSocket(WS_URL);
 
 	useEffect(() => {
 		if (readyState === WebSocket.CLOSED) {

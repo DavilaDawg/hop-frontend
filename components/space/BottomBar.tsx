@@ -22,12 +22,6 @@ interface User {
 interface Users {
 	[uuid: string]: User;
 }
-interface FooterMessage {
-	type: "footer";
-	username: string;
-	nickname?: string;
-	pfp?: string;
-}
 interface BottomBarProps {
 	setSelectedCursor: (cursor: string) => void;
 	otherUsers: Users;
