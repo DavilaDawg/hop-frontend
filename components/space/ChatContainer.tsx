@@ -123,7 +123,7 @@ const ChatContainer: React.FC = () => {
 									// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
 									key={index}
 								>
-									{isJoinMessage && msg.username
+									{(isJoinMessage && msg.username)
 										? `${msg.username} joined`
 										: `${msg.username}: ${msg.message}`}
 								</p>
