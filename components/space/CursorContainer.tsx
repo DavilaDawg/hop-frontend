@@ -145,6 +145,7 @@ const CursorContainer: React.FC<HomeProps> = ({
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
+		sendJsonMessageThrottled.current("")
 		if (lastJsonMessage) {
 			const users = lastJsonMessage as Users;
 			console.log("users", users);
