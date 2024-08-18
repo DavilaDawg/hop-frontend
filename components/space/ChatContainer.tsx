@@ -66,7 +66,7 @@ const ChatContainer: React.FC = () => {
 			ws.onmessage = (event) => {
 				try {
 					const data = JSON.parse(event.data) as ChatMessage;
-					if (data.type === "chat" || (data.type === "join" && data.username)) {
+					if (data.type === "chat") {
 						setMessages((prevMessages) => [...prevMessages, data]);
 					}
 				} catch (error) {
@@ -114,20 +114,14 @@ const ChatContainer: React.FC = () => {
 					<ScrollBar>
 						{messages.map((msg, index) => {
 							if (!msg.username) return null;
-							const isJoinMessage = msg.type === "join";
-							const messageClasses = isJoinMessage
-								? "bg-green-100 text-green-800 border-green-300"
-								: "bg-blue-100 text-blue-800 border-blue-300";
 
 							return (
 								<p
-									className={`whitespace-pre-wrap break-words border-2 mt-2 rounded-xl p-2 ${messageClasses}`}
+									className="whitespace-pre-wrap break-words border-2 mt-2 rounded-xl p-2 bg-purple-200 text-green-800 border-purple-400"
 									// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
 									key={index}
 								>
-									{isJoinMessage
-										? `${msg.username} joined`
-										: `${msg.username}: ${msg.message}`}
+									{`${msg.username}: ${msg.message}`}
 								</p>
 							);
 						})}
