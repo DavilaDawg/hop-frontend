@@ -199,7 +199,6 @@ const CursorContainer: React.FC<HomeProps> = ({
 			) : (
 				<>
 					{renderUsersList(otherUsers)}
-					{renderCursors(otherUsers, color, selectedCursor, username)}
 				</>
 			)}
 		</div>
