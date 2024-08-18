@@ -77,7 +77,6 @@ const SpacePage: React.FC = () => {
 
 	const [wsUrl, setWsUrl] = useState<string | null>(null);
 
-	// WebSocket hook
 	const { sendJsonMessage } = useWebSocket(wsUrl, {
 	  shouldReconnect: () => true,
 	  reconnectAttempts: 100,
@@ -91,18 +90,6 @@ const SpacePage: React.FC = () => {
 		  );
 		}
 	  }, [username, pfp, nickname]);
-	
-	  const handleEnterSpace = (enterSpace: boolean) => {
-		setEnterSpace(enterSpace);
-		if (enterSpace) {
-		  sendJsonMessage({
-			type: "setUsername",
-			username: username,
-			pfp: pfp,
-			nickname: nickname,
-		  });
-		}
-	  };
 
 	  return (
 		<>
@@ -130,7 +117,7 @@ const SpacePage: React.FC = () => {
 					/>
 				  ) : (
 					<EnterSpace
-					  onSubmit={handleEnterSpace}
+					  onSubmit={setEnterSpace}
 					  setColorProp={setColor}
 					  username={username}
 					  pfp={pfp}
