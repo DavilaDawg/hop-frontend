@@ -64,7 +64,7 @@ const ChatContainer: React.FC = () => {
 					const data = JSON.parse(event.data) as ChatMessage;
 					if (
 						data.type === "chat" ||
-						(data.type === "join" && messages.length < 1)
+						(data.type === "join" && messages.length < 1 && data.username)
 					) {
 						setMessages((prevMessages) => [...prevMessages, data]);
 					}
@@ -123,7 +123,7 @@ const ChatContainer: React.FC = () => {
 									// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
 									key={index}
 								>
-									{(isJoinMessage && msg.username)
+									{isJoinMessage
 										? `${msg.username} joined`
 										: `${msg.username}: ${msg.message}`}
 								</p>
