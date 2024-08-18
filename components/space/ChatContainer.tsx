@@ -59,37 +59,44 @@ const ChatContainer: React.FC = () => {
 	useEffect(() => {
 		if (!username) return;
 
-		const WS_URL = `wss://hop-websocket1-76a542d0c47b.herokuapp.com?username=${encodeURIComponent(username)}`;
-		const ws = new WebSocket(WS_URL);
-
-		ws.onopen = () => {
-			console.log("WebSocket connected");
-		};
-
-		ws.onmessage = (event) => {
-			try {
+		const connectWebSocket = () => {
+			const WS_URL = `wss://hop-websocket1-76a542d0c47b.herokuapp.com?username=${encodeURIComponent(username)}`;
+			const ws = new WebSocket(WS_URL);
+	  
+			ws.onopen = () => {
+			  console.log("WebSocket connected");
+			};
+	  
+			ws.onmessage = (event) => {
+			  try {
 				const data = JSON.parse(event.data) as ChatMessage;
 				if (
-					data.type === "chat" ||
-					(data.type === "join" && messages.length < 1)
+				  data.type === "chat" ||
+				  (data.type === "join" && messages.length < 1)
 				) {
-					setMessages((prevMessages) => [...prevMessages, data]);
+				  setMessages((prevMessages) => [...prevMessages, data]);
 				}
-			} catch (error) {
+			  } catch (error) {
 				console.error("Error processing WebSocket message:", error);
+			  }
+			};
+	  
+			ws.onclose = () => {
+			  console.log("WebSocket disconnected, attempting to reconnect in 3 seconds...");
+			  setInterval(connectWebSocket, 3000); 
+			};
+	  
+			wsRef.current = ws;
+		  };
+	  
+		  connectWebSocket();
+	  
+		  return () => {
+			if (wsRef.current) {
+			  wsRef.current.close();
 			}
-		};
-
-		ws.onclose = () => {
-			console.log("WebSocket disconnected");
-		};
-
-		wsRef.current = ws;
-
-		return () => {
-			ws.close();
-		};
-	}, [username]);
+		  };
+		}, [username]);
 
 	const handleSendMessage = () => {
 		if (inputMessage.trim() && wsRef.current) {
