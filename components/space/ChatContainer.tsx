@@ -151,9 +151,9 @@ const ChatContainer: React.FC = () => {
 						</button>
 						{showEmojiPicker && (
 							<div className="absolute bottom-14">
-								<Picker data={data} theme="dark" onEmojiSelect={handleEmojiSelect} />
+								<Picker data={data} perLine="6" theme="dark" onEmojiSelect={handleEmojiSelect} />
 							</div>
-						)}
+						)} 
 						<input
 							type="text"
 							value={inputMessage}
