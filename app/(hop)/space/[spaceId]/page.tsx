@@ -10,7 +10,6 @@ import { useState, useEffect, useRef } from "react";
 import CursorContainer from "@components/space/CursorContainer";
 import EnterSpace from "@components/space/EnterSpace";
 import Image from "next/image";
-import useWebSocket from "react-use-websocket";
 
 interface UserState {
 	username: string;
@@ -74,21 +73,6 @@ const SpacePage: React.FC = () => {
 		};
 		fetchAndSetUserData();
 	}, [user]);
-
-	const [wsUrl, setWsUrl] = useState<string | null>(null);
-
-	const { sendJsonMessage } = useWebSocket(wsUrl, {
-		shouldReconnect: () => true,
-		reconnectAttempts: 100,
-		share: true,
-	});
-
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-	useEffect(() => {
-		setWsUrl(
-			`wss://hop-websocket1-76a542d0c47b.herokuapp.com?username=${encodeURIComponent(username)}&pfp=${encodeURIComponent(pfp)}&nickname=${encodeURIComponent(nickname)}`,
-		);
-	}, []);
 
 	return (
 		<>
