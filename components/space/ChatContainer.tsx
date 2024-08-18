@@ -123,8 +123,8 @@ const ChatContainer: React.FC = () => {
 									key={index}
 								>
 									{isJoinMessage
-										? `${username} joined`
-										: `${username}: ${msg.message}`}
+										? `${msg.username} joined`
+										: `${msg.username}: ${msg.message}`}
 								</p>
 							);
 						})}
