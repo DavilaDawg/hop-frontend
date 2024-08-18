@@ -76,14 +76,6 @@ const SpacePage: React.FC = () => {
 
 	return (
 		<>
-			<Image
-				src="/hop.png"
-				alt="Logo"
-				width={150}
-				height={150}
-				priority
-				className="fixed z-50 left-60 mt-[21.5%] -rotate-90"
-			/>
 			<div className="relative flex h-screen flex-col overflow-hidden">
 				<div className="flex flex-grow overflow-hidden relative">
 					<main className="flex-grow flex flex-col relative ">
