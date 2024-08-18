@@ -148,17 +148,17 @@ const CursorContainer: React.FC<HomeProps> = ({
 		if (lastJsonMessage) {
 			const users = lastJsonMessage as Users;
 			console.log("users", users);
-			const seenUsernames = new Set<string>();
+			//const seenUsernames = new Set<string>();
 
 			const filteredUsers = Object.keys(users).reduce<Users>((acc, uuid) => {
 				const currentUser = users[uuid];
 				if (
 					currentUser.username !== username &&
-					!seenUsernames.has(currentUser.username) &&
+					//!seenUsernames.has(currentUser.username) &&
 					currentUser.username !== "" &&
 					currentUser.pfp
 				) {
-					seenUsernames.add(currentUser.username);
+					//seenUsernames.add(currentUser.username);
 
 					acc[uuid] = {
 						username: currentUser.username,
