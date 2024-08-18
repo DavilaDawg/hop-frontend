@@ -28,12 +28,6 @@ interface User {
 interface Users {
 	[uuid: string]: User;
 }
-interface FooterMessage {
-	type: "footer";
-	username: string;
-	nickname?: string;
-	pfp?: string;
-}
 
 const SpacePage: React.FC = () => {
 	const params = useParams();
@@ -46,7 +40,6 @@ const SpacePage: React.FC = () => {
 	const [enterSpace, setEnterSpace] = useState<boolean>(false);
 	const [otherUsers, setOtherUsers] = useState<Users>({});
 	const user = useUser({ or: "redirect" });
-	const wsRef = useRef<WebSocket | null>(null);
 
 	const fetch = async () => {
 		try {
