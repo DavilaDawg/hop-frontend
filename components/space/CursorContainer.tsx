@@ -173,7 +173,7 @@ const CursorContainer: React.FC<HomeProps> = ({
 			setOtherUsers(filteredUsers);
 			console.log("filteredUsers", filteredUsers);
 		}
-	}, [lastJsonMessage]); 
+	}, [lastJsonMessage, username]); 
 
 	const handleMouseDown = () => {
 		setIsTracking(false);
