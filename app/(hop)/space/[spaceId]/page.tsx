@@ -75,33 +75,6 @@ const SpacePage: React.FC = () => {
 		fetchAndSetUserData();
 	}, [user]);
 
-	useEffect(() => {
-		if (username && !wsRef.current) {
-		  const ws = new WebSocket(`ws://localhost:8000?username=${username}&pfp=${pfp}&nickname=${nickname}&color=${color}&selectedCursor=${selectedCursor}`);
-		  
-		  ws.onopen = () => {
-			console.log("WebSocket connection established");
-		  };
-	
-		  ws.onmessage = (event) => {
-			const data = JSON.parse(event.data);
-			if (data.type === "userState") {
-			  setOtherUsers(data.users);
-			}
-		  };
-	
-		  ws.onclose = () => {
-			console.log("WebSocket connection closed");
-		  };
-	
-		  wsRef.current = ws;
-	
-		  return () => {
-			ws.close();
-		  };
-		}
-	  }, [username, pfp, nickname, color, selectedCursor]);
-
 	return (
 		<>
 			<Image

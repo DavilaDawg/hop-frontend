@@ -99,6 +99,7 @@ const CursorContainer: React.FC<HomeProps> = ({
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
+		console.log("first message", username, nickname, pfp, color )
 		sendJsonMessage({
 			x: 0,
 			y: 0,
@@ -108,6 +109,8 @@ const CursorContainer: React.FC<HomeProps> = ({
 			pfp: pfp,
 			color: color,
 		});
+
+		
 
 		const handleMouseMove = (e: MouseEvent) => {
 			if (containerRef.current) {
@@ -143,10 +146,12 @@ const CursorContainer: React.FC<HomeProps> = ({
 	useEffect(() => {
 		if (lastJsonMessage) {
 				const users = lastJsonMessage as Users;
+				console.log("users", users)
 				const seenUsernames = new Set<string>();
 
 				const filteredUsers = Object.keys(users).reduce<Users>((acc, uuid) => {
 					const currentUser = users[uuid];
+					console.log("currentUser:", currentUser)
 					if (
 						currentUser.username !== username &&
 						!seenUsernames.has(currentUser.username)
@@ -163,6 +168,7 @@ const CursorContainer: React.FC<HomeProps> = ({
 					return acc;
 				}, {});
 				setOtherUsers(filteredUsers);
+				console.log("filteredUsers", filteredUsers)
 		}
 	}, [lastJsonMessage, username, nickname, pfp, color, selectedCursor]);
 
