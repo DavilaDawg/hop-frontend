@@ -45,7 +45,6 @@ const SpacePage: React.FC = () => {
 	const [selectedCursor, setSelectedCursor] = useState<string>("");
 	const [enterSpace, setEnterSpace] = useState<boolean>(false);
 	const [otherUsers, setOtherUsers] = useState<Users>({});
-	const [footerInfo, setFooterInfo] = useState<FooterMessage[]>([]);
 	const user = useUser({ or: "redirect" });
 	const wsRef = useRef<WebSocket | null>(null);
 
@@ -141,7 +140,6 @@ const SpacePage: React.FC = () => {
 						<BottomBar
 							setSelectedCursor={setSelectedCursor}
 							otherUsers={otherUsers}
-							footerInfo={footerInfo}
 						/>
 					</main>
 					<RightSideBar />

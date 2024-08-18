@@ -166,7 +166,7 @@ const CursorContainer: React.FC<HomeProps> = ({
 					}
 					return acc;
 				}, {});
-				setOtherUsers(filteredUsers); // TURN OFF 
+				setOtherUsers(filteredUsers);
 				console.log("filteredUsers", filteredUsers)
 		}
 	}, [lastJsonMessage, username, nickname, pfp, color, selectedCursor]);

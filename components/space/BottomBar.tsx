@@ -31,13 +31,11 @@ interface FooterMessage {
 interface BottomBarProps {
 	setSelectedCursor: (cursor: string) => void;
 	otherUsers: Users;
-	footerInfo: FooterMessage[];
 }
 
 const BottomBar: React.FC<BottomBarProps> = ({
 	setSelectedCursor,
 	otherUsers,
-	footerInfo,
 }) => {
 	const [username, setUsername] = useState("");
 	const [nickname, setNickname] = useState("");
