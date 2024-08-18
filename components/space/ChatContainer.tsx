@@ -2,7 +2,7 @@
 
 import ScrollBar from "@components/ui/SrollBar";
 import type React from "react";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useRef } from "react";
 import { FiSend, FiSmile } from "react-icons/fi";
 import useWebSocket from "react-use-websocket";
 import { ServiceMethods } from "@lib/servicesMethods";
@@ -19,11 +19,12 @@ const ChatContainer: React.FC = () => {
 	const [inputMessage, setInputMessage] = useState("");
 	const [username, setUsername] = useState("");
 	const user = useUser({ or: "redirect" });
+	const wsRef = useRef<WebSocket | null>(null);
 
 	const fetch = async () => {
 		try {
 			const { accessToken, refreshToken } = await user.getAuthJson();
-			if (!accessToken || !refreshToken) return
+			if (!accessToken || !refreshToken) return;
 			const serviceMethods = new ServiceMethods(accessToken, refreshToken);
 			const result = await serviceMethods.fetchUser();
 			return result;
@@ -43,25 +44,31 @@ const ChatContainer: React.FC = () => {
 		fetchAndSetUserData();
 	}, [user]);
 
-	const WS_URL = `wss://hop-websocket1-76a542d0c47b.herokuapp.com?username=${encodeURIComponent(username)}`;
-
-	const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(WS_URL, {
-		shouldReconnect: () => true,
-		reconnectAttempts: 100,
-		share: true,
-	});
-
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
-		if (readyState === WebSocket.CLOSED) {
-			console.error("WebSocket connection closed unexpectedly");
-		}
-	}, [readyState]);
+		const fetchAndSetUserData = async () => {
+			const result = await fetch();
+			if (result) {
+				setUsername(result.username);
+			}
+		};
+		fetchAndSetUserData();
+	}, [user]);
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
-		if (lastJsonMessage) {
+		if (!username) return;
+
+		const WS_URL = `wss://hop-websocket1-76a542d0c47b.herokuapp.com?username=${encodeURIComponent(username)}`;
+		const ws = new WebSocket(WS_URL);
+
+		ws.onopen = () => {
+			console.log("WebSocket connected");
+		};
+
+		ws.onmessage = (event) => {
 			try {
-				const data = lastJsonMessage as ChatMessage;
+				const data = JSON.parse(event.data) as ChatMessage;
 				if (
 					data.type === "chat" ||
 					(data.type === "join" && messages.length < 1)
@@ -71,16 +78,27 @@ const ChatContainer: React.FC = () => {
 			} catch (error) {
 				console.error("Error processing WebSocket message:", error);
 			}
-		}
-	}, [lastJsonMessage]);
+		};
+
+		ws.onclose = () => {
+			console.log("WebSocket disconnected");
+		};
+
+		wsRef.current = ws;
+
+		return () => {
+			ws.close();
+		};
+	}, [username]);
 
 	const handleSendMessage = () => {
-		if (inputMessage.trim()) {
-			sendJsonMessage({
+		if (inputMessage.trim() && wsRef.current) {
+			const message = {
 				type: "chat",
 				username: username,
 				message: inputMessage,
-			});
+			};
+			wsRef.current.send(JSON.stringify(message));
 			setInputMessage("");
 		}
 	};

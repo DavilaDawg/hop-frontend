@@ -75,22 +75,6 @@ const SpacePage: React.FC = () => {
 		fetchAndSetUserData();
 	}, [user]);
 
-	/*
-	const WS_URL = `wss://hop-websocket1-76a542d0c47b.herokuapp.com?username=${encodeURIComponent(username)}&pfp=${encodeURIComponent(pfp)}&nickname=${encodeURIComponent(nickname)}`;
-
-	const { sendJsonMessage, readyState } = useWebSocket(WS_URL, {
-		shouldReconnect: () => true,
-		reconnectAttempts: 100,
-		share: true,
-	});
-
-	useEffect(() => {
-		if (readyState === WebSocket.CLOSED) {
-			console.error("WebSocket connection closed unexpectedly");
-		}
-	}, [readyState]);
-	*/
-
 	return (
 		<>
 			<Image
