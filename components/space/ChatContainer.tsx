@@ -78,7 +78,7 @@ const ChatContainer: React.FC = () => {
 				console.log(
 					"WebSocket disconnected, attempting to reconnect in 3 seconds...",
 				);
-				setTimeout(connectWebSocket, 5000);
+				setTimeout(connectWebSocket, 3000);
 			};
 
 			wsRef.current = ws;
