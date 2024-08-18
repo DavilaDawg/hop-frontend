@@ -44,7 +44,6 @@ const ChatContainer: React.FC = () => {
 		fetchAndSetUserData();
 	}, [user]);
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		if (!username) return;
 
@@ -53,14 +52,7 @@ const ChatContainer: React.FC = () => {
 			const ws = new WebSocket(WS_URL);
 
 			ws.onopen = () => {
-				if (isInitialConnection.current) {
-					const joinMessage = {
-						type: "join",
-						username: username,
-					};
-					ws.send(JSON.stringify(joinMessage));
-					isInitialConnection.current = false;
-				}
+				console.log("open ws")
 			};
 
 			ws.onmessage = (event) => {
