@@ -150,8 +150,8 @@ const ChatContainer: React.FC = () => {
 							<FiSmile className="w-5 h-5" />
 						</button>
 						{showEmojiPicker && (
-							<div className="absolute bottom-14 w-2/3">
-								<Picker data={data} onEmojiSelect={handleEmojiSelect} />
+							<div className="absolute bottom-14">
+								<Picker data={data} perline="3" onEmojiSelect={handleEmojiSelect} />
 							</div>
 						)}
 						<input
