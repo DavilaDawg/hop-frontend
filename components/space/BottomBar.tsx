@@ -34,7 +34,6 @@ const BottomBar: React.FC<BottomBarProps> = ({
 	const [username, setUsername] = useState("");
 	const [nickname, setNickname] = useState("");
 	const [pfp, setPfp] = useState("");
-
 	const user = useUser({ or: "redirect" });
 
 	const fetch = async () => {
@@ -74,7 +73,6 @@ const BottomBar: React.FC<BottomBarProps> = ({
 
 				{Object.keys(otherUsers).map((uuid) => {
 					const user = otherUsers[uuid];
-
 					const userUsername = user?.username || "Unknown";
 					const userNickname = user?.nickname || "No nickname";
 					const userPfp = user?.pfp || "";

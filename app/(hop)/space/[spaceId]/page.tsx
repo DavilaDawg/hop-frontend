@@ -9,8 +9,6 @@ import { ServiceMethods } from "@lib/servicesMethods";
 import { useState, useEffect, useRef } from "react";
 import CursorContainer from "@components/space/CursorContainer";
 import EnterSpace from "@components/space/EnterSpace";
-import Image from "next/image";
-
 interface UserState {
 	username: string;
 	color: string;
