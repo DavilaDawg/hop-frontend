@@ -93,6 +93,7 @@ const SpacePage: React.FC = () => {
 		}
 	}, [readyState]);
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		if (lastJsonMessage) {
 			try {
@@ -103,7 +104,7 @@ const SpacePage: React.FC = () => {
 				console.error("Error processing WebSocket message:", error);
 			}
 		}
-	}, [lastJsonMessage]);
+	}, [enterSpace]);
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
