@@ -95,19 +95,6 @@ const SpacePage: React.FC = () => {
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
-		if (lastJsonMessage) {
-			try {
-				const data = lastJsonMessage as FooterMessage;
-				setFooterInfo((prev) => [...prev, data]);
-				console.log("footer:", footerInfo)
-			} catch (error) {
-				console.error("Error processing WebSocket message:", error);
-			}
-		}
-	}, [enterSpace]);
-
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-	useEffect(() => {
 		sendJsonMessage({
 			type: "footer",
 			username: username,
