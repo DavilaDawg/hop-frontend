@@ -91,6 +91,8 @@ const SpacePage: React.FC = () => {
 							{enterSpace ? (
 								<CursorContainer
 									username={username}
+									nickname= {nickname}
+									pfp={pfp}
 									color={color}
 									selectedCursor={selectedCursor}
 									otherUsers={otherUsers}

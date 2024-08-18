@@ -22,6 +22,8 @@ interface Users {
 }
 interface HomeProps {
 	username: string;
+	pfp: string;
+	nickname: string;
 	color: string;
 	selectedCursor: string;
 	otherUsers: Users;
@@ -77,13 +79,15 @@ const CursorContainer: React.FC<HomeProps> = ({
 	username,
 	color,
 	selectedCursor,
+	pfp, 
+	nickname, 
 	otherUsers,
 	setOtherUsers,
 }) => {
 	const [isTracking, setIsTracking] = useState(true);
 	const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-	const WS_URL = `wss://hop-websocket1-76a542d0c47b.herokuapp.com?username=${encodeURIComponent(username)}&selectedCursor=${encodeURIComponent(selectedCursor)}&color=${encodeURIComponent(color)}`;
+	const WS_URL = `wss://hop-websocket1-76a542d0c47b.herokuapp.com?username=${encodeURIComponent(username)}&selectedCursor=${encodeURIComponent(selectedCursor)}&color=${encodeURIComponent(color)}&pfp=${encodeURIComponent(pfp)}&nickname=${encodeURIComponent(nickname)}`;
 
 	const containerRef = useRef<HTMLDivElement>(null);
 
@@ -100,6 +104,8 @@ const CursorContainer: React.FC<HomeProps> = ({
 			y: 0,
 			cursor: selectedCursor,
 			username: username,
+			nickname: nickname, 
+			pfp: pfp,
 			color: color,
 		});
 
@@ -131,7 +137,7 @@ const CursorContainer: React.FC<HomeProps> = ({
 				container.removeEventListener("mousemove", handleMouseMove);
 			}
 		};
-	}, [sendJsonMessage]);
+	}, [sendJsonMessage, username]);
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
@@ -146,14 +152,12 @@ const CursorContainer: React.FC<HomeProps> = ({
 						!seenUsernames.has(currentUser.username)
 					) {
 						seenUsernames.add(currentUser.username);
-						seenUsernames.add(currentUser.nickname);
-						seenUsernames.add(currentUser.pfp);
 						
 						acc[uuid] = {
-							username: currentUser.username,
-							nickname: currentUser.nickname, 
-							pfp: currentUser.pfp,           
-							state: currentUser.state
+							username: currentUser.username, 
+							nickname: currentUser.nickname, // UNDEFINED
+							pfp: currentUser.pfp,  // UNDEFINED        
+							state: currentUser.state 
 						  };
 					}
 					return acc;
