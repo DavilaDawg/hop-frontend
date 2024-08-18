@@ -66,10 +66,7 @@ const ChatContainer: React.FC = () => {
 			ws.onmessage = (event) => {
 				try {
 					const data = JSON.parse(event.data) as ChatMessage;
-					if (
-						data.type === "chat" ||
-						(data.type === "join" && messages.length < 1 && data.username)
-					) {
+					if (data.type === "chat") {
 						setMessages((prevMessages) => [...prevMessages, data]);
 					}
 				} catch (error) {
