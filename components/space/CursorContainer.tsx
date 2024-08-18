@@ -92,6 +92,13 @@ const CursorContainer: React.FC<HomeProps> = ({
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	const { sendJsonMessage, lastJsonMessage } = useWebSocket(WS_URL);
+	/*
+	const { sendJsonMessage } = useWebSocket(wsUrl, {
+		shouldReconnect: () => true,
+		reconnectAttempts: 0,
+		share: true,
+	});
+	*/
 
 	const THROTTLE = 10;
 

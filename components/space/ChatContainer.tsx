@@ -47,6 +47,14 @@ const ChatContainer: React.FC = () => {
 
 	const { sendJsonMessage, lastJsonMessage, readyState } = useWebSocket(WS_URL);
 
+	/*
+	const { sendJsonMessage } = useWebSocket(wsUrl, {
+		shouldReconnect: () => true,
+		reconnectAttempts: 0,
+		share: true,
+	});
+	*/
+
 	useEffect(() => {
 		if (readyState === WebSocket.CLOSED) {
 			console.error("WebSocket connection closed unexpectedly");

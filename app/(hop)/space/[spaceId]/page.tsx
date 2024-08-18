@@ -79,6 +79,14 @@ const SpacePage: React.FC = () => {
 
 	const { sendJsonMessage, readyState } = useWebSocket(WS_URL);
 
+	/* 
+	const { sendJsonMessage } = useWebSocket(wsUrl, {
+		shouldReconnect: () => true,
+		reconnectAttempts: 0,
+		share: true,
+	});
+	*/
+
 	useEffect(() => {
 		if (readyState === WebSocket.CLOSED) {
 			console.error("WebSocket connection closed unexpectedly");
