@@ -145,35 +145,38 @@ const CursorContainer: React.FC<HomeProps> = ({
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
-		sendJsonMessageThrottled.current("")
-		if (lastJsonMessage) {
-			const users = lastJsonMessage as Users;
-			console.log("users", users);
-			const seenUsernames = new Set<string>();
+		const timeoutId = setInterval(() => {
+			sendJsonMessageThrottled.current("");
+			if (lastJsonMessage) {
+				const users = lastJsonMessage as Users;
+				console.log("users", users);
+				const seenUsernames = new Set<string>();
 
-			const filteredUsers = Object.keys(users).reduce<Users>((acc, uuid) => {
-				const currentUser = users[uuid];
-				if (
-					currentUser.username !== username &&
-					!seenUsernames.has(currentUser.username) &&
-					currentUser.username !== "" &&
-					currentUser.pfp
-				) {
-					seenUsernames.add(currentUser.username);
+				const filteredUsers = Object.keys(users).reduce<Users>((acc, uuid) => {
+					const currentUser = users[uuid];
+					if (
+						currentUser.username !== username &&
+						!seenUsernames.has(currentUser.username) &&
+						currentUser.username !== "" &&
+						currentUser.pfp
+					) {
+						seenUsernames.add(currentUser.username);
 
-					acc[uuid] = {
-						username: currentUser.username,
-						nickname: currentUser.nickname,
-						pfp: currentUser.pfp,
-						state: currentUser.state,
-					};
-				}
-				return acc;
-			}, {});
-			setOtherUsers(filteredUsers);
-			console.log("filteredUsers", filteredUsers);
-		}
-	}, [lastJsonMessage, username]); 
+						acc[uuid] = {
+							username: currentUser.username,
+							nickname: currentUser.nickname,
+							pfp: currentUser.pfp,
+							state: currentUser.state,
+						};
+					}
+					return acc;
+				}, {});
+				setOtherUsers(filteredUsers);
+			}
+		}, 2000);
+		return () => clearTimeout(timeoutId);
+
+	}, [lastJsonMessage, username]);
 
 	const handleMouseDown = () => {
 		setIsTracking(false);
