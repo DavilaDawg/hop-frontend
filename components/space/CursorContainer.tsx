@@ -65,16 +65,6 @@ const renderCursors = (
 	});
 };
 
-const renderUsersList = (users: Users) => {
-	return (
-		<ul>
-			{Object.keys(users).map((uuid) => {
-				return <li key={uuid}>{users[uuid].username}</li>;
-			})}
-		</ul>
-	);
-};
-
 const CursorContainer: React.FC<HomeProps> = ({
 	username,
 	color,
@@ -149,7 +139,6 @@ const CursorContainer: React.FC<HomeProps> = ({
 			sendJsonMessageThrottled.current("");
 			if (lastJsonMessage) {
 				const users = lastJsonMessage as Users;
-				console.log("users", users);
 				const seenUsernames = new Set<string>();
 
 				const filteredUsers = Object.keys(users).reduce<Users>((acc, uuid) => {
