@@ -171,7 +171,7 @@ const CursorContainer: React.FC<HomeProps> = ({
 		console.log("filteredUsers", filteredUsers);
 	};
 
-	setInterval(ping, 5000)
+	setInterval(ping, 500)
 
 	const handleMouseDown = () => {
 		setIsTracking(false);
