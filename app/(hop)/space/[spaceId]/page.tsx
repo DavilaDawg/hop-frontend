@@ -6,7 +6,7 @@ import { useUser } from "@stackframe/stack";
 import BottomBar from "@components/space/BottomBar";
 import RightSideBar from "@components/space/RightSideBar";
 import { ServiceMethods } from "@lib/servicesMethods";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import CursorContainer from "@components/space/CursorContainer";
 import EnterSpace from "@components/space/EnterSpace";
 import Image from "next/image";
@@ -39,6 +39,7 @@ const SpacePage: React.FC = () => {
 	const [enterSpace, setEnterSpace] = useState<boolean>(false);
 	const [otherUsers, setOtherUsers] = useState<Users>({});
 	const user = useUser({ or: "redirect" });
+	const wsRef = useRef<WebSocket | null>(null);
 
 	const fetch = async () => {
 		try {
@@ -73,6 +74,33 @@ const SpacePage: React.FC = () => {
 		};
 		fetchAndSetUserData();
 	}, [user]);
+
+	useEffect(() => {
+		if (username && !wsRef.current) {
+		  const ws = new WebSocket(`ws://localhost:8000?username=${username}&pfp=${pfp}&nickname=${nickname}&color=${color}&selectedCursor=${selectedCursor}`);
+		  
+		  ws.onopen = () => {
+			console.log("WebSocket connection established");
+		  };
+	
+		  ws.onmessage = (event) => {
+			const data = JSON.parse(event.data);
+			if (data.type === "userState") {
+			  setOtherUsers(data.users);
+			}
+		  };
+	
+		  ws.onclose = () => {
+			console.log("WebSocket connection closed");
+		  };
+	
+		  wsRef.current = ws;
+	
+		  return () => {
+			ws.close();
+		  };
+		}
+	  }, [username, pfp, nickname, color, selectedCursor]);
 
 	return (
 		<>
