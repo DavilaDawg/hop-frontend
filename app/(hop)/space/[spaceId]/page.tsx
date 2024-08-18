@@ -92,7 +92,6 @@ const SpacePage: React.FC = () => {
 		}
 	  }, [username, pfp, nickname]);
 	
-	  // Modified handleEnterSpace function
 	  const handleEnterSpace = (enterSpace: boolean) => {
 		setEnterSpace(enterSpace);
 		if (enterSpace) {
@@ -105,7 +104,6 @@ const SpacePage: React.FC = () => {
 		}
 	  };
 
-	  
 	  return (
 		<>
 		  <Image
