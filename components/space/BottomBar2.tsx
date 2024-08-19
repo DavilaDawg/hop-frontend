@@ -28,17 +28,18 @@ interface BottomBarProps {
 }
 
 interface Item {
-    id: number;
-    name: string;
-    designation: string;
-    image: string;
-  }
+	id: number;
+	name: string;
+	designation: string;
+	image: string;
+}
 
 const BottomBar2: React.FC<BottomBarProps> = ({ otherUsers }) => {
 	const [username, setUsername] = useState("");
 	const [nickname, setNickname] = useState("");
 	const [pfp, setPfp] = useState("");
 	const user = useUser({ or: "redirect" });
+	const [fetchedUser, setFetchedUser] = useState<Item | null>(null);
 
 	const fetch = async () => {
 		try {
@@ -56,13 +57,17 @@ const BottomBar2: React.FC<BottomBarProps> = ({ otherUsers }) => {
 	useEffect(() => {
 		const fetchAndSetUserData = async () => {
 			const result = await fetch();
-			if (result) {
-				setUsername(result.username);
-				setNickname(result.nickname);
-				setPfp(result.profilePicture);
-			} else {
-				setUsername("User");
-			}
+
+			setUsername(result.username);
+			setNickname(result.nickname);
+			setPfp(result.profilePicture);
+
+			setFetchedUser({
+				id: 1, 
+				name: result.nickname,
+				designation: result.username,
+				image: result.profilePicture,
+			});
 		};
 		fetchAndSetUserData();
 	}, [user]);
@@ -71,24 +76,21 @@ const BottomBar2: React.FC<BottomBarProps> = ({ otherUsers }) => {
 		return Object.keys(otherUsers).map((uuid, index) => {
 			const user = otherUsers[uuid];
 			return {
-				id: index + 1, 
+				id: index + 2,
 				name: user.nickname,
-				designation: user.username, 
+				designation: user.username,
 				image: user.pfp,
 			};
 		});
 	};
 
-    const items = convertUsersToItems(otherUsers);
+    const items = fetchedUser ? [fetchedUser, ...convertUsersToItems(otherUsers)] : convertUsersToItems(otherUsers);
 
 	return (
 		<div className="bg-gray-200 p-3 flex items-center justify-between">
 			{/* <SelectCursor setSelectedCursor={setSelectedCursor} /> */}
 			<div className="flex-1 flex justify-center ml-[32%] mb-[0.5%]">
-				<Avatar username={username} nickname={nickname} icon={pfp} />
-
-				<AnimatedTooltip items={items}/>
-
+				<AnimatedTooltip items={items} />
 			</div>
 
 			<div className="w-1/3 flex justify-end items-center space-x-2">
