@@ -127,7 +127,7 @@ const ChatContainer: React.FC = () => {
 
 							return (
 								<p
-									className="whitespace-pre-wrap break-words border-2 mt-2 rounded-xl p-2 bg-purple-200 text-green-800 border-purple-400"
+									className="whitespace-pre-wrap break-words border-2 mt-2 rounded-xl p-2 bg-purple-200 text-green-800 border-purple-400 shadow-2xl"
 									// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
 									key={index}
 								>
