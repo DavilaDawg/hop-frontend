@@ -75,7 +75,7 @@ const CursorContainer: React.FC<HomeProps> = ({
 				}, {});
 				setOtherUsers(filteredUsers);
 			}
-		}, 500);
+		}, 50);
 		return () => clearTimeout(timeoutId);
 
 	}, [lastJsonMessage, username]);
