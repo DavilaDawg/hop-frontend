@@ -130,7 +130,7 @@ const ChatContainer: React.FC = () => {
 	};
 
 	return (
-		<div className="flex flex-col h-screen p-4">
+		<div className="flex flex-col h-full p-4">
 			<p className="text-3xl font-semibold p-2">Chat</p>
 
 			<div className="bg-white rounded-xl p-4 flex flex-col max-h-[900px] message-container">
