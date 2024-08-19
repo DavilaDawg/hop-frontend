@@ -23,6 +23,7 @@
     "lodash": "^4.17.21",
     "lodash.throttle": "^4.1.1",
     "lucide-react": "^0.427.0",
+    "moment": "^2.30.1",
     "next": "14.2.5",
     "perfect-cursors": "^1.0.5",
     "randomcolor": "^0.6.2",
