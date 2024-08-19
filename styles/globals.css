@@ -59,6 +59,7 @@
   margin-bottom: 8px; /* Adds space between messages */
 }
 
-.message:last-child {
-  margin-bottom: 0; /* Removes margin from the last message */
-}
+/* .message:last-child {
+  margin-bottom: 0; /* Removes margin from the last message 
+} 
+*/
