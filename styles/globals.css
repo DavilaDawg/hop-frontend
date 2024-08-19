@@ -50,5 +50,8 @@
 }
 
 .message {
-  margin-top: 0.5rem;
+  margin-top: auto;
+}
+.message:last-child {
+  margin-bottom: 0;
 }
