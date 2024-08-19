@@ -116,10 +116,10 @@ const ChatContainer: React.FC = () => {
 	};
 
 	return (
-		<div className="flex flex-col h-full p-4">
+		<div className="flex flex-col h-screen p-4">
 			<p className="text-3xl font-semibold p-2">Chat</p>
 
-			<div className="bg-white rounded-xl p-4 flex flex-col max-h-full message-container">
+			<div className="bg-white rounded-xl p-4 flex flex-col max-h-screen message-container">
 				<div className="flex flex-col message-list overflow-y-scroll">
 					{messages.map((msg, index) => {
 						if (!msg.username) return null;
