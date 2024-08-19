@@ -38,3 +38,17 @@
   border-radius: 20px;
   border: 2px solid #1F2937;
 }
+.message-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.message-list {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.message {
+  margin-top: auto;
+}

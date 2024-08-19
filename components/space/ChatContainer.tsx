@@ -1,6 +1,5 @@
 "use client";
 
-import ScrollBar from "@components/ui/SrollBar";
 import type React from "react";
 import { useState, useEffect, useRef } from "react";
 import { FiSend, FiSmile } from "react-icons/fi";
@@ -9,6 +8,7 @@ import { useUser } from "@stackframe/stack";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 import moment from "moment";
+import "../styles/globals.css";
 interface ChatMessage {
 	type: "chat" | "join";
 	username: string;
@@ -24,15 +24,6 @@ const ChatContainer: React.FC = () => {
 	const user = useUser({ or: "redirect" });
 	const wsRef = useRef<WebSocket | null>(null);
 	const isInitialConnection = useRef(true);
-	const chatContainerRef = useRef<HTMLDivElement>(null);
-
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-	useEffect(() => {
-		if (chatContainerRef.current) {
-			chatContainerRef.current.scrollTop =
-				chatContainerRef.current.scrollHeight;
-		}
-	}, [messages]);
 
 	const fetch = async () => {
 		try {
@@ -128,17 +119,14 @@ const ChatContainer: React.FC = () => {
 		<div className="flex flex-col h-full p-4">
 			<p className="text-3xl font-semibold p-2">Chat</p>
 
-			<div className="flex-grow bg-white rounded-xl p-4 flex flex-col">
-				<div
-					ref={chatContainerRef}
-					className="flex-grow overflow-y-auto flex flex-col-reverse"
-				>
+			<div className="flex-grow bg-white rounded-xl p-4 flex flex-col message-container">
+				<div className="message-list flex flex-col">
 					{messages.map((msg, index) => {
 						if (!msg.username) return null;
 
 						return (
 							// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-							<div className="flex flex-col" key={index}>
+							<div className="flex flex-col message" key={index}>
 								<div className="flex flex-col">
 									<p className="whitespace-pre-wrap break-words border-2 mt-1 rounded-xl p-2 bg-purple-200 text-green-800 border-purple-400">
 										{`${msg.username}: ${msg.message}`}
@@ -148,6 +136,8 @@ const ChatContainer: React.FC = () => {
 							</div>
 						);
 					})}
+					{/*<div ref={messageEndRef} />{" "}*/}
+					{/* This empty div is used to scroll to the bottom */}
 				</div>
 			</div>
 
