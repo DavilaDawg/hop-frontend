@@ -19,7 +19,7 @@ const ChatContainer: React.FC = () => {
 	const [inputMessage, setInputMessage] = useState("");
 	const [username, setUsername] = useState("");
 	const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-	const []
+	//const []
 	const user = useUser({ or: "redirect" });
 	const wsRef = useRef<WebSocket | null>(null);
 	const isInitialConnection = useRef(true);
