@@ -138,8 +138,9 @@ const ChatContainer: React.FC = () => {
 										key={index}
 									>
 										{`${msg.username}: ${msg.message}`}
+										<p className="text-sm font-light">{time}</p>
 									</p>
-									<p className="text-sm font-light">{time}</p>
+									
 								</div>
 							);
 						})}
