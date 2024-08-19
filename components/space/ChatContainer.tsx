@@ -120,15 +120,14 @@ const ChatContainer: React.FC = () => {
 		<div className="flex flex-col h-full p-4">
 			<p className="text-3xl font-semibold p-2">Chat</p>
 
-			<div className="flex-grow bg-white rounded-xl p-4 flex flex-col">
-				<div className="flex-grow overflow-y-auto">
+			<div className="bg-white rounded-xl p-4 flex flex-col">
 					<ScrollBar>
 							{messages.map((msg, index) => {
 								if (!msg.username) return null;
 
 								return (
 									// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-									<div className="flex flex-col first:mt-100" key={index}>
+									<div className="flex flex-col first:mt-auto" key={index}>
 										<p className="whitespace-pre-wrap break-words border-2 mt-1 rounded-xl p-2 bg-purple-200 text-green-800 border-purple-400">
 											{`${msg.username}: ${msg.message}`}
 										</p>
@@ -137,7 +136,6 @@ const ChatContainer: React.FC = () => {
 								);
 							})}
 					</ScrollBar>
-				</div>
 			</div>
 
 			<div className="mt-4">
