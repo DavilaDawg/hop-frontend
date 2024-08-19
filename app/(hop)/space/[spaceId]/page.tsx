@@ -4,6 +4,7 @@ import { useParams } from "next/navigation";
 import VncDisplay from "@components/space/FetchFlyURL";
 import { useUser } from "@stackframe/stack";
 import BottomBar from "@components/space/BottomBar";
+import BottomBar2 from "@components/space/BottomBar2";
 import RightSideBar from "@components/space/RightSideBar";
 import { ServiceMethods } from "@lib/servicesMethods";
 import { useState, useEffect, useRef } from "react";
@@ -96,7 +97,7 @@ const SpacePage: React.FC = () => {
 							)}
 							<VncDisplay spaceId={spaceId} />
 						</div>
-						<BottomBar otherUsers={otherUsers} />
+						<BottomBar2 otherUsers={otherUsers} />
 					</main>
 					<RightSideBar />
 				</div>
