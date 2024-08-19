@@ -8,7 +8,7 @@ import { ServiceMethods } from "@lib/servicesMethods";
 import { useUser } from "@stackframe/stack";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
-import moment from 'moment';
+import moment from "moment";
 interface ChatMessage {
 	type: "chat" | "join";
 	username: string;
@@ -20,7 +20,7 @@ const ChatContainer: React.FC = () => {
 	const [inputMessage, setInputMessage] = useState("");
 	const [username, setUsername] = useState("");
 	const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-	const [time, setTime] = useState("")
+	const [time, setTime] = useState("");
 	const user = useUser({ or: "redirect" });
 	const wsRef = useRef<WebSocket | null>(null);
 	const isInitialConnection = useRef(true);
@@ -106,8 +106,8 @@ const ChatContainer: React.FC = () => {
 			};
 			wsRef.current.send(JSON.stringify(message));
 			setInputMessage("");
-			
-			setTime(moment().format('LT'))
+
+			setTime(moment().format("LT"));
 		}
 	};
 
@@ -130,14 +130,17 @@ const ChatContainer: React.FC = () => {
 							if (!msg.username) return null;
 
 							return (
-								<p
-									className="first:mt-auto whitespace-pre-wrap break-words border-2 mt-2 rounded-xl p-2 bg-purple-200 text-green-800 border-purple-400 shadow-2xl"
-									// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-									key={index}
-								>
-									{`${msg.username}: ${msg.message}`}
-									{time}
-								</p>
+								// biome-ignore lint/correctness/useJsxKeyInIterable: <explanation>
+								<div className="flex flex-col">
+									<p
+										className="first:mt-auto whitespace-pre-wrap break-words border-2 mt-2 rounded-xl p-2 bg-purple-200 text-green-800 border-purple-400 shadow-2xl"
+										// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+										key={index}
+									>
+										{`${msg.username}: ${msg.message}`}
+										<p className= "text-sm font-light">{time}</p>
+									</p>
+								</div>
 							);
 						})}
 					</ScrollBar>
@@ -156,9 +159,15 @@ const ChatContainer: React.FC = () => {
 						</button>
 						{showEmojiPicker && (
 							<div className="absolute bottom-14">
-								<Picker data={data} perLine="6" theme="dark" maxFrequentRows="2" onEmojiSelect={handleEmojiSelect} />
+								<Picker
+									data={data}
+									perLine="6"
+									theme="dark"
+									maxFrequentRows="2"
+									onEmojiSelect={handleEmojiSelect}
+								/>
 							</div>
-						)} 
+						)}
 						<input
 							type="text"
 							value={inputMessage}
