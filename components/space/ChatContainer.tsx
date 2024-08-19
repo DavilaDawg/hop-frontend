@@ -133,7 +133,7 @@ const ChatContainer: React.FC = () => {
 		<div className="flex flex-col h-full p-4">
 			<p className="text-3xl font-semibold p-2">Chat</p>
 
-			<div className="bg-white rounded-xl p-4 flex flex-col max-h-[80%] message-container">
+			<div className="bg-white rounded-xl p-4 flex flex-col max-h-[74%] message-container">
 				<div className="flex flex-col message-list overflow-y-auto" ref={messageListRef}>
 					{messages.map((msg, index) => {
 						if (!msg.username) return null;
