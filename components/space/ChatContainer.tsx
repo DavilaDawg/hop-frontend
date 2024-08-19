@@ -120,7 +120,7 @@ const ChatContainer: React.FC = () => {
 			<p className="text-3xl font-semibold p-2">Chat</p>
 
 			<div className="flex-grow bg-white rounded-xl p-4 flex flex-col message-container">
-				<div className="flex flex-col message-list">
+				<div className="flex flex-col message-list overflow-y-scroll">
 					{messages.map((msg, index) => {
 						if (!msg.username) return null;
 
@@ -140,6 +140,8 @@ const ChatContainer: React.FC = () => {
 					{/* This empty div is used to scroll to the bottom */}
 				</div>
 			</div>
+
+
 			<div className="mt-4">
 				<div className="p-2 border-t border-gray-300">
 					<div className="relative flex items-center">
