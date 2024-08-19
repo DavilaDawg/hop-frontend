@@ -120,7 +120,7 @@ const ChatContainer: React.FC = () => {
 			<p className="text-3xl font-semibold p-2">Chat</p>
 
 			<div className="flex-grow bg-white rounded-xl p-4 flex flex-col message-container">
-				<div className="message-list flex flex-col">
+				<div className="flex flex-col message-list">
 					{messages.map((msg, index) => {
 						if (!msg.username) return null;
 
@@ -128,7 +128,7 @@ const ChatContainer: React.FC = () => {
 							// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
 							<div className="flex flex-col message" key={index}>
 								<div className="flex flex-col">
-									<p className="whitespace-pre-wrap break-words border-2 mt-1 rounded-xl p-2 bg-purple-200 text-green-800 border-purple-400">
+									<p className="whitespace-pre-wrap break-words border-2 rounded-xl p-2 bg-purple-200 text-green-800 border-purple-400">
 										{`${msg.username}: ${msg.message}`}
 									</p>
 									<p className="text-sm font-light">{time}</p>
@@ -140,7 +140,6 @@ const ChatContainer: React.FC = () => {
 					{/* This empty div is used to scroll to the bottom */}
 				</div>
 			</div>
-
 			<div className="mt-4">
 				<div className="p-2 border-t border-gray-300">
 					<div className="relative flex items-center">
