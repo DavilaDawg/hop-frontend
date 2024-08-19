@@ -9,6 +9,7 @@ import { useUser } from "@stackframe/stack";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 import moment from "moment";
+
 interface ChatMessage {
 	type: "chat" | "join";
 	username: string;
@@ -24,6 +25,7 @@ const ChatContainer: React.FC = () => {
 	const user = useUser({ or: "redirect" });
 	const wsRef = useRef<WebSocket | null>(null);
 	const isInitialConnection = useRef(true);
+	const messagesEndRef = useRef<HTMLDivElement>(null);
 
 	const fetch = async () => {
 		try {
@@ -97,6 +99,15 @@ const ChatContainer: React.FC = () => {
 		};
 	}, [username]);
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+	useEffect(() => {
+		scrollToBottom();
+	}, [messages]);
+
+	const scrollToBottom = () => {
+		messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+	};
+
 	const handleSendMessage = () => {
 		if (inputMessage.trim() && wsRef.current) {
 			const message = {
@@ -120,14 +131,16 @@ const ChatContainer: React.FC = () => {
 		<div className="flex flex-col h-full p-4">
 			<p className="text-3xl font-semibold p-2">Chat</p>
 
-			<div className="bg-white rounded-xl p-4 flex flex-col">
+			<div className="flex-grow bg-white rounded-xl p-4 flex flex-col">
+				<div className="flex-grow overflow-y-auto">
 					<ScrollBar>
+						<div className="flex flex-col">
 							{messages.map((msg, index) => {
 								if (!msg.username) return null;
 
 								return (
 									// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-									<div className="flex flex-col first:mt-auto" key={index}>
+									<div className="flex flex-col" key={index}>
 										<p className="whitespace-pre-wrap break-words border-2 mt-1 rounded-xl p-2 bg-purple-200 text-green-800 border-purple-400">
 											{`${msg.username}: ${msg.message}`}
 										</p>
@@ -135,7 +148,10 @@ const ChatContainer: React.FC = () => {
 									</div>
 								);
 							})}
+							<div ref={messagesEndRef} />
+						</div>
 					</ScrollBar>
+				</div>
 			</div>
 
 			<div className="mt-4">
