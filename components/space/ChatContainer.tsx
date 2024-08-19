@@ -116,9 +116,6 @@ const ChatContainer: React.FC = () => {
 		setShowEmojiPicker(false);
 	};
 
-	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-	const EmojiPicker: any = Picker;
-
 	return (
 		<div className="flex flex-col h-full p-4">
 			<p className="text-3xl font-semibold p-2">Chat</p>
@@ -127,14 +124,14 @@ const ChatContainer: React.FC = () => {
 				<div className="flex-grow overflow-y-auto">
 					<ScrollBar>
 						{/* Ensure the container with messages has proper spacing and direction */}
-						<div className="flex flex-col-reverse space-y-2">
+						<div className="flex space-y-2">
 							{messages.map((msg, index) => {
 								if (!msg.username) return null;
 
 								return (
 									// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
 									<div className="flex flex-col" key={index}>
-										<p className="whitespace-pre-wrap break-words border-2 mt-2 rounded-xl p-2 bg-purple-200 text-green-800 border-purple-400">
+										<p className="whitespace-pre-wrap break-words border-2 mt-1 rounded-xl p-2 bg-purple-200 text-green-800 border-purple-400">
 											{`${msg.username}: ${msg.message}`}
 										</p>
 										<p className="text-sm font-light">{time}</p>
