@@ -24,6 +24,20 @@ const ChatContainer: React.FC = () => {
 	const user = useUser({ or: "redirect" });
 	const wsRef = useRef<WebSocket | null>(null);
 	const isInitialConnection = useRef(true);
+	const messageListRef = useRef<HTMLDivElement | null>(null);
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+	useEffect(() => {
+		if (messageListRef.current) {
+		  const scrollOptions: ScrollToOptions = {
+			top: messageListRef.current.scrollHeight,
+			behavior: 'smooth'
+		  };
+		  messageListRef.current.scrollTo(scrollOptions);
+		}
+	  }, [messages]);
+	
+
 
 	const fetch = async () => {
 		try {
@@ -120,7 +134,7 @@ const ChatContainer: React.FC = () => {
 			<p className="text-3xl font-semibold p-2">Chat</p>
 
 			<div className="bg-white rounded-xl p-4 flex flex-col max-h-[900px] message-container">
-				<div className="flex flex-col message-list overflow-y-hidden">
+				<div className="flex flex-col message-list overflow-y-auto" ref={messageListRef}>
 					{messages.map((msg, index) => {
 						if (!msg.username) return null;
 
