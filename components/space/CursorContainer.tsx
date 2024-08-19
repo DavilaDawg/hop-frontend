@@ -22,19 +22,17 @@ interface HomeProps {
 	username: string;
 	pfp: string;
 	nickname: string;
-	color: string;
 	setOtherUsers: React.Dispatch<React.SetStateAction<Users>>;
 }
 
 const CursorContainer: React.FC<HomeProps> = ({
 	username,
-	color,
 	pfp,
 	nickname,
 	setOtherUsers,
 }) => {
 
-	const WS_URL = `wss://hop-websocket1-76a542d0c47b.herokuapp.com?username=${encodeURIComponent(username)}&color=${encodeURIComponent(color)}&pfp=${encodeURIComponent(pfp)}&nickname=${encodeURIComponent(nickname)}`;
+	const WS_URL = `wss://hop-websocket1-76a542d0c47b.herokuapp.com?username=${encodeURIComponent(username)}&pfp=${encodeURIComponent(pfp)}&nickname=${encodeURIComponent(nickname)}`;
 
 	const { sendJsonMessage, lastJsonMessage } = useWebSocket(WS_URL, {
 		shouldReconnect: () => true,

@@ -3,13 +3,11 @@
 import { useParams } from "next/navigation";
 import VncDisplay from "@components/space/FetchFlyURL";
 import { useUser } from "@stackframe/stack";
-import BottomBar from "@components/space/BottomBar";
 import BottomBar2 from "@components/space/BottomBar2";
 import RightSideBar from "@components/space/RightSideBar";
 import { ServiceMethods } from "@lib/servicesMethods";
 import { useState, useEffect, useRef } from "react";
 import CursorContainer from "@components/space/CursorContainer";
-import EnterSpace from "@components/space/EnterSpace";
 interface UserState {
 	username: string;
 	color: string;
@@ -33,8 +31,6 @@ const SpacePage: React.FC = () => {
 	const [username, setUsername] = useState("");
 	const [pfp, setPfp] = useState("");
 	const [nickname, setNickname] = useState("");
-	const [color, setColor] = useState<string>("");
-	const [enterSpace, setEnterSpace] = useState<boolean>(false);
 	const [otherUsers, setOtherUsers] = useState<Users>({});
 	const user = useUser({ or: "redirect" });
 
@@ -82,7 +78,6 @@ const SpacePage: React.FC = () => {
 								username={username}
 								nickname={nickname}
 								pfp={pfp}
-								color={color}
 								setOtherUsers={setOtherUsers}
 							/>
 							<VncDisplay spaceId={spaceId} />
