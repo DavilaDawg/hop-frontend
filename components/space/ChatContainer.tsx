@@ -128,8 +128,8 @@ const ChatContainer: React.FC = () => {
 
 								return (
 									// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-									<div className="flex flex-col" key={index}>
-										<p className="first:mt-auto whitespace-pre-wrap break-words border-2 mt-1 rounded-xl p-2 bg-purple-200 text-green-800 border-purple-400">
+									<div className="flex flex-col first:mt-auto" key={index}>
+										<p className="whitespace-pre-wrap break-words border-2 mt-1 rounded-xl p-2 bg-purple-200 text-green-800 border-purple-400">
 											{`${msg.username}: ${msg.message}`}
 										</p>
 										<p className="text-sm font-light">{time}</p>
