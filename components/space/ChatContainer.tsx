@@ -126,21 +126,18 @@ const ChatContainer: React.FC = () => {
 			<div className="flex-grow bg-white rounded-xl p-4 flex flex-col">
 				<div className="flex-grow overflow-y-auto">
 					<ScrollBar>
-						<div className="flex flex-col-reverse">
+						{/* Ensure the container with messages has proper spacing and direction */}
+						<div className="flex flex-col-reverse space-y-2">
 							{messages.map((msg, index) => {
 								if (!msg.username) return null;
 
 								return (
-									// biome-ignore lint/correctness/useJsxKeyInIterable: <explanation>
-									<div className="flex flex-col">
-										<p
-											className="first:mt-auto whitespace-pre-wrap break-words border-2 mt-2 rounded-xl p-2 bg-purple-200 text-green-800 border-purple-400 shadow-2xl"
-											// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-											key={index}
-										>
+									// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+									<div className="flex flex-col" key={index}>
+										<p className="whitespace-pre-wrap break-words border-2 mt-2 rounded-xl p-2 bg-purple-200 text-green-800 border-purple-400">
 											{`${msg.username}: ${msg.message}`}
-											<p className="text-sm font-light">{time}</p>
 										</p>
+										<p className="text-sm font-light">{time}</p>
 									</div>
 								);
 							})}
