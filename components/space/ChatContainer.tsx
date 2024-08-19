@@ -129,24 +129,25 @@ const ChatContainer: React.FC = () => {
 			<p className="text-3xl font-semibold p-2">Chat</p>
 
 			<div className="flex-grow bg-white rounded-xl p-4 flex flex-col">
-				<div ref={chatContainerRef} className="flex-grow overflow-y-auto">
-					<ScrollBar>
-						{messages.map((msg, index) => {
-							if (!msg.username) return null;
+				<div
+					ref={chatContainerRef}
+					className="flex-grow overflow-y-auto flex flex-col-reverse"
+				>
+					{messages.map((msg, index) => {
+						if (!msg.username) return null;
 
-							return (
-								// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-								<div className="flex flex-col" key={index}>
-									<div className= "first:mt-auto">
-										<p className="whitespace-pre-wrap break-words border-2 mt-1 rounded-xl p-2 bg-purple-200 text-green-800 border-purple-400">
-											{`${msg.username}: ${msg.message}`}
-										</p>
-										<p className="text-sm font-light">{time}</p>
-									</div>
+						return (
+							// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+							<div className="flex flex-col" key={index}>
+								<div className="flex flex-col">
+									<p className="whitespace-pre-wrap break-words border-2 mt-1 rounded-xl p-2 bg-purple-200 text-green-800 border-purple-400">
+										{`${msg.username}: ${msg.message}`}
+									</p>
+									<p className="text-sm font-light">{time}</p>
 								</div>
-							);
-						})}
-					</ScrollBar>
+							</div>
+						);
+					})}
 				</div>
 			</div>
 
