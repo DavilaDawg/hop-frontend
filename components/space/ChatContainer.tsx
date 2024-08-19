@@ -8,7 +8,7 @@ import { useUser } from "@stackframe/stack";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 import moment from "moment";
-import "../styles/globals.css";
+import "../../styles/globals.css";
 interface ChatMessage {
 	type: "chat" | "join";
 	username: string;
