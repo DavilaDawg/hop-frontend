@@ -78,23 +78,13 @@ const SpacePage: React.FC = () => {
 				<div className="flex flex-grow overflow-hidden relative">
 					<main className="flex-grow flex flex-col relative ">
 						<div className="relative flex-grow flex items-center justify-center">
-							{enterSpace ? (
-								<CursorContainer
-									username={username}
-									nickname={nickname}
-									pfp={pfp}
-									color={color}
-									setOtherUsers={setOtherUsers}
-								/>
-							) : (
-								<EnterSpace
-									onSubmit={setEnterSpace}
-									setColorProp={setColor}
-									username={username}
-									pfp={pfp}
-									nickname={nickname}
-								/>
-							)}
+							<CursorContainer
+								username={username}
+								nickname={nickname}
+								pfp={pfp}
+								color={color}
+								setOtherUsers={setOtherUsers}
+							/>
 							<VncDisplay spaceId={spaceId} />
 						</div>
 						<BottomBar2 otherUsers={otherUsers} />
