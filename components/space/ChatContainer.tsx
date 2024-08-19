@@ -9,7 +9,6 @@ import { useUser } from "@stackframe/stack";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 import moment from "moment";
-
 interface ChatMessage {
 	type: "chat" | "join";
 	username: string;
@@ -25,7 +24,15 @@ const ChatContainer: React.FC = () => {
 	const user = useUser({ or: "redirect" });
 	const wsRef = useRef<WebSocket | null>(null);
 	const isInitialConnection = useRef(true);
-	const messagesEndRef = useRef<HTMLDivElement>(null);
+	const chatContainerRef = useRef<HTMLDivElement>(null);
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+	useEffect(() => {
+		if (chatContainerRef.current) {
+			chatContainerRef.current.scrollTop =
+				chatContainerRef.current.scrollHeight;
+		}
+	}, [messages]);
 
 	const fetch = async () => {
 		try {
@@ -99,15 +106,6 @@ const ChatContainer: React.FC = () => {
 		};
 	}, [username]);
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-	useEffect(() => {
-		scrollToBottom();
-	}, [messages]);
-
-	const scrollToBottom = () => {
-		messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-	};
-
 	const handleSendMessage = () => {
 		if (inputMessage.trim() && wsRef.current) {
 			const message = {
@@ -132,24 +130,21 @@ const ChatContainer: React.FC = () => {
 			<p className="text-3xl font-semibold p-2">Chat</p>
 
 			<div className="flex-grow bg-white rounded-xl p-4 flex flex-col">
-				<div className="flex-grow overflow-y-auto">
+				<div ref={chatContainerRef} className="flex-grow overflow-y-auto">
 					<ScrollBar>
-						<div className="flex flex-col">
-							{messages.map((msg, index) => {
-								if (!msg.username) return null;
+						{messages.map((msg, index) => {
+							if (!msg.username) return null;
 
-								return (
-									// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-									<div className="flex flex-col" key={index}>
-										<p className="whitespace-pre-wrap break-words border-2 mt-1 rounded-xl p-2 bg-purple-200 text-green-800 border-purple-400">
-											{`${msg.username}: ${msg.message}`}
-										</p>
-										<p className="text-sm font-light">{time}</p>
-									</div>
-								);
-							})}
-							<div ref={messagesEndRef} />
-						</div>
+							return (
+								// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+								<div className="flex flex-col first:mt-auto" key={index}>
+									<p className="whitespace-pre-wrap break-words border-2 mt-1 rounded-xl p-2 bg-purple-200 text-green-800 border-purple-400">
+										{`${msg.username}: ${msg.message}`}
+									</p>
+									<p className="text-sm font-light">{time}</p>
+								</div>
+							);
+						})}
 					</ScrollBar>
 				</div>
 			</div>
