@@ -33,7 +33,6 @@ const SpacePage: React.FC = () => {
 	const [pfp, setPfp] = useState("");
 	const [nickname, setNickname] = useState("");
 	const [color, setColor] = useState<string>("");
-	const [selectedCursor, setSelectedCursor] = useState<string>("");
 	const [enterSpace, setEnterSpace] = useState<boolean>(false);
 	const [otherUsers, setOtherUsers] = useState<Users>({});
 	const user = useUser({ or: "redirect" });
@@ -84,8 +83,6 @@ const SpacePage: React.FC = () => {
 									nickname={nickname}
 									pfp={pfp}
 									color={color}
-									selectedCursor={selectedCursor}
-									otherUsers={otherUsers}
 									setOtherUsers={setOtherUsers}
 								/>
 							) : (
@@ -99,10 +96,7 @@ const SpacePage: React.FC = () => {
 							)}
 							<VncDisplay spaceId={spaceId} />
 						</div>
-						<BottomBar
-							setSelectedCursor={setSelectedCursor}
-							otherUsers={otherUsers}
-						/>
+						<BottomBar otherUsers={otherUsers} />
 					</main>
 					<RightSideBar />
 				</div>

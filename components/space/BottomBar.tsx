@@ -2,7 +2,6 @@ import type React from "react";
 import Avatar from "@components/ui/UserAvatar";
 import { Slider } from "@/components/ui/slider";
 import { IoMdVolumeHigh } from "react-icons/io";
-import SelectCursor from "./SelectCursor";
 import { useUser } from "@stackframe/stack";
 import { useEffect, useState } from "react";
 import { ServiceMethods } from "@lib/servicesMethods";
@@ -23,12 +22,10 @@ interface Users {
 	[uuid: string]: User;
 }
 interface BottomBarProps {
-	setSelectedCursor: (cursor: string) => void;
 	otherUsers: Users;
 }
 
 const BottomBar: React.FC<BottomBarProps> = ({
-	setSelectedCursor,
 	otherUsers,
 }) => {
 	const [username, setUsername] = useState("");
@@ -57,9 +54,7 @@ const BottomBar: React.FC<BottomBarProps> = ({
 				setNickname(result.nickname);
 				setPfp(result.profilePicture);
 			} else {
-				setUsername("User1"); // CHANGE TO RANDOM NUMBER
-				setNickname("user");
-				setPfp("");
+				setUsername("User"); 
 			}
 		};
 		fetchAndSetUserData();
@@ -74,7 +69,7 @@ const BottomBar: React.FC<BottomBarProps> = ({
 				{Object.keys(otherUsers).map((uuid) => {
 					const user = otherUsers[uuid];
 					const userUsername = user?.username || "Unknown";
-					const userNickname = user?.nickname || "No nickname";
+					const userNickname = user?.nickname || "";
 					const userPfp = user?.pfp || "";
 
 					return (
