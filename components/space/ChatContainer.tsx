@@ -123,19 +123,19 @@ const ChatContainer: React.FC = () => {
 			<div className="flex-grow bg-white rounded-xl p-4 flex flex-col">
 				<div className="flex-grow overflow-y-auto">
 					<ScrollBar>
-						{messages.map((msg, index) => {
-							if (!msg.username) return null;
+							{messages.map((msg, index) => {
+								if (!msg.username) return null;
 
-							return (
-								// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-								<div className="flex flex-col" key={index}>
-									<p className="whitespace-pre-wrap break-words border-2 mt-1 rounded-xl p-2 bg-purple-200 text-green-800 border-purple-400">
-										{`${msg.username}: ${msg.message}`}
-									</p>
-									<p className="text-sm font-light">{time}</p>
-								</div>
-							);
-						})}
+								return (
+									// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+									<div className="flex flex-col" key={index}>
+										<p className="first:mt-auto whitespace-pre-wrap break-words border-2 mt-1 rounded-xl p-2 bg-purple-200 text-green-800 border-purple-400">
+											{`${msg.username}: ${msg.message}`}
+										</p>
+										<p className="text-sm font-light">{time}</p>
+									</div>
+								);
+							})}
 					</ScrollBar>
 				</div>
 			</div>
