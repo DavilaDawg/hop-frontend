@@ -19,6 +19,7 @@ const ChatContainer: React.FC = () => {
 	const [inputMessage, setInputMessage] = useState("");
 	const [username, setUsername] = useState("");
 	const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+	const []
 	const user = useUser({ or: "redirect" });
 	const wsRef = useRef<WebSocket | null>(null);
 	const isInitialConnection = useRef(true);
@@ -125,9 +126,9 @@ const ChatContainer: React.FC = () => {
 						{messages.map((msg, index) => {
 							if (!msg.username) return null;
 
-							return (
+							return ( // margin top auto
 								<p
-									className="whitespace-pre-wrap break-words border-2 mt-2 rounded-xl p-2 bg-purple-200 text-green-800 border-purple-400 shadow-2xl"
+									className="first:mt-auto whitespace-pre-wrap break-words border-2 mt-2 rounded-xl p-2 bg-purple-200 text-green-800 border-purple-400 shadow-2xl"
 									// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
 									key={index}
 								>
