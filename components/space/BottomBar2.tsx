@@ -35,9 +35,6 @@ interface Item {
 }
 
 const BottomBar2: React.FC<BottomBarProps> = ({ otherUsers }) => {
-	const [username, setUsername] = useState("");
-	const [nickname, setNickname] = useState("");
-	const [pfp, setPfp] = useState("");
 	const user = useUser({ or: "redirect" });
 	const [fetchedUser, setFetchedUser] = useState<Item | null>(null);
 
@@ -57,10 +54,6 @@ const BottomBar2: React.FC<BottomBarProps> = ({ otherUsers }) => {
 	useEffect(() => {
 		const fetchAndSetUserData = async () => {
 			const result = await fetch();
-
-			setUsername(result.username);
-			setNickname(result.nickname);
-			setPfp(result.profilePicture);
 
 			setFetchedUser({
 				id: 1, 
